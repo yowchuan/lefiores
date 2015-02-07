@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 #same with capistrano
-gem 'mina'
-gem 'mina-sidekiq', :require => false
-gem 'mina-unicorn', :require => false
+#gem 'mina'
+#gem 'mina-sidekiq', :require => false
+#gem 'mina-unicorn', :require => false
+group :development do
+    gem 'capistrano-rails'
+    gem 'capistrano-rbenv', '~> 2.0', require: false
+end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
