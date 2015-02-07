@@ -1,5 +1,24 @@
-server "lefiores.com", :app, :web, :db, :primary => true
-set :deploy_to, "/home/deployer/lefiores"
+set :rails_env, 'production' # NOTE: need to set your this environment name.
+
+role :app, %w{deployer@lefiores.com}
+server 'lefiores.com', user: 'deployer', roles: %w{ app}, my_property: :my_value  # NOTE: need to set server name
+
+set :branch, :master # NOTE: need to set your branch which you wanna test
+
+set :deploy_to, "/home/deployer/#{fetch(:application)}"
+
+
+
+
+
+
+
+
+
+
+
+#server "lefiores.com", :app, :web, :db, :primary => true
+#set :deploy_to, "/home/deployer/lefiores"
 
 # Simple Role Syntax
 # ==================
@@ -7,9 +26,9 @@ set :deploy_to, "/home/deployer/lefiores"
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{deploy@example.com}
-role :web, %w{deploy@example.com}
-role :db,  %w{deploy@example.com}
+#role :app, %w{deploy@example.com}
+#role :web, %w{deploy@example.com}
+#role :db,  %w{deploy@example.com}
 
 
 # Extended Server Syntax
@@ -18,7 +37,7 @@ role :db,  %w{deploy@example.com}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'lefiores.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
+#server 'lefiores.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 
 # Custom SSH Options
