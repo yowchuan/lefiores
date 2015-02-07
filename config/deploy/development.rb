@@ -1,5 +1,5 @@
 server "lefiores.com", :app, :web, :db, :primary => true
-set :deploy_to, "/home/deployer/lefiores_staging"
+set :deploy_to, "/home/deployer/development"
 
 # Simple Role Syntax
 # ==================
@@ -18,7 +18,7 @@ role :db,  %w{deploy@example.com}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'lefiores.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
+server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 
 # Custom SSH Options
