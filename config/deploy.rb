@@ -89,6 +89,21 @@ namespace :lefiores do
     end
   end
  
+  desc "Restart Gamerz(Unicorn) (USR2); use this when preload_app: true"
+  task :restart do
+    invoke "gamerz:start"
+    on roles(:app) do
+      within current_path do
+        #execute :bundle, :install
+        #execute :bundle, :exec, "rake assets:precompile"
+        with bundle_gemfile: "#{current_path}/Gemfile" do
+          info "unicorn restarting..."
+          execute :kill, "-s USR2", pid
+        end
+      end
+    end
+  end
+
   desc 'restart nginx (service)'
   task :restart_nginx do
     on roles(:app), in: :sequence, wait: 3 do
