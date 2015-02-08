@@ -12,15 +12,7 @@
   </thead>
 
   <tbody>
-    <% @tests.each do |test| %>
-      <tr>
-        <td><%= test.att1 %></td>
-        <td><%= test.att2 %></td>
-        <td><%= link_to 'Show', test %></td>
-        <td><%= link_to 'Edit', edit_test_path(test) %></td>
-        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+    Test
   </tbody>
 </table>
 

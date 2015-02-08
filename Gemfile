@@ -3,12 +3,11 @@ source 'https://rubygems.org'
 #gem 'mina'
 #gem 'mina-sidekiq', :require => false
 #gem 'mina-unicorn', :require => false
-group :development do
-    gem 'capistrano-rails'
-    gem 'capistrano-rbenv', '~> 2.0', require: false
+
+gem 'capistrano-rails'
+gem 'capistrano-rbenv', '~> 2.0', require: false
     #gem 'capistrano3-unicorn'
 
-end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -43,7 +42,7 @@ gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  #gem 'byebug'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -54,4 +53,5 @@ end
 
 #for databae using mongodb
 gem "mongoid", "~> 4.0.0"
+gem "connection_pool", "~> 2.0.0"
 
