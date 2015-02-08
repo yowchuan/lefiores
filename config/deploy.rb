@@ -91,7 +91,7 @@ namespace :lefiores do
  
   desc "Restart Gamerz(Unicorn) (USR2); use this when preload_app: true"
   task :restart do
-    invoke "gamerz:start"
+    invoke "lefiores:start"
     on roles(:app) do
       within current_path do
         #execute :bundle, :install
