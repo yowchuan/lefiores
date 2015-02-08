@@ -22,7 +22,7 @@ gem 'haml-rails'
 gem 'meta-tags', :require => 'meta_tags'
 
 #for uikit
-gem "uikit-sass-rails"
+
 
 
 # Use Uglifier as compressor for JavaScript assets
