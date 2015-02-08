@@ -1,9 +1,2 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  att1: MyString
-  att2: 1
-
-two:
-  att1: MyString
-  att2: 1
