@@ -1,0 +1,35 @@
+%nav.uk-navbar
+  %a.uk-navbar-brand{:href => "#"} Lefiores
+  %ul.uk-navbar-nav
+    %li.uk-parent.uk-active{"data-uk-dropdown" => ""}
+      %a{:href => ""}
+        %i.uk-icon-home
+        Home
+      .uk-dropdown.uk-dropdown-navbar
+        %ul.uk-nav.uk-nav-navbar
+          %li
+            %a{:href => "#"} Item
+          %li
+            %a{:href => "#"} Another item
+          %li.uk-nav-header Header
+          %li
+            %a{:href => "#"} Item
+          %li
+            %a{:href => "#"} Another item
+          %li.uk-nav-divider
+          %li
+            %a{:href => "#"} Separated item
+  .uk-navbar-content
+    Some
+    = succeed "." do
+      %a{:href => "#"} link
+  .uk-navbar-content.uk-hidden-small
+    %form.uk-form.uk-margin-remove.uk-display-inline-block
+      %input{:placeholder => "Search", :type => "text"}/
+      %button.uk-button.uk-button-primary Submit
+  .uk-navbar-content.uk-navbar-flip.uk-hidden-small
+    .uk-button-group
+      %a.uk-button.uk-button-primary{:href => "#"} Sign Up
+      %a.uk-button.uk-button-primary{:href => "#"} Register
+      -#%button.uk-button.uk-button-primary Login
+      
