@@ -1,0 +1,43 @@
+machine:
+  ruby:
+    version: 2.1.2
+    #version: 2.1.4
+    #version: 2.1.2-railsexpress
+
+deployment:
+  master:
+    branch: master
+    commands:
+      #- cap dev deploy
+      - sh script/deploy_production.sh
+      #- cap dev start_unicorn
+
+  #staging:
+  #  branch: staging 
+  #  commands:
+  #    - sh script/deploy_staging.sh
+      #- cap staging start_unicorn
+
+  #production:
+  #  branch: production 
+  #  commands:
+      #- cap production deploy
+  #    - sh script/deploy_production.sh
+      #- cap production start_unicorn
+
+
+  #com_staging:
+  #  branch: en.staging
+  #  commands:
+  #    - sh script/deploy_com_staging.sh
+
+  #com_production:
+  #  branch: en.production
+  #  commands:
+  #    - sh script/deploy_com_production.sh
+   
+  #rakd:
+  #  branch: topic
+  #  commands:
+  #    - sh script/deploy_rakd.sh
+
