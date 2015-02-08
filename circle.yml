@@ -9,7 +9,7 @@ deployment:
     branch: master
     commands:
       #- cap dev deploy
-      - sh script/deploy_production.sh
+      - sh scripts/deploy_production.sh
       #- cap dev start_unicorn
 
   #staging:
