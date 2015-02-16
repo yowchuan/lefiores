@@ -28,8 +28,12 @@
       %input{:placeholder => "Search", :type => "text"}/
       %button.uk-button.uk-button-primary Submit
   .uk-navbar-content.uk-navbar-flip.uk-hidden-small
-    .uk-button-group
-      %a.uk-button.uk-button-primary{:href => "#"} Sign Up
-      %a.uk-button.uk-button-primary{:href => "#"} Register
+    -if current_user.present?
+      %a.uk-button.uk-button-primary{:href => "/logout"} Logout
+    -else
+      .uk-button-group
+        %a.uk-button.uk-button-primary{:href => "/users/new"} Sign Up
+        %a.uk-button.uk-button-primary{:href => "/login"} Login
+      
       -#%button.uk-button.uk-button-primary Login
       

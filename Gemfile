@@ -1,13 +1,7 @@
 source 'https://rubygems.org'
-#same with capistrano
-#gem 'mina'
-#gem 'mina-sidekiq', :require => false
-#gem 'mina-unicorn', :require => false
 
 gem 'capistrano-rails'
-gem 'capistrano-rbenv', '~> 2.0', require: false
-    #gem 'capistrano3-unicorn'
-
+gem 'capistrano-rbenv', '~> 2.0', require: false    
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -18,10 +12,12 @@ gem 'sass-rails', '~> 5.0'
 
 #for haml
 gem 'haml-rails'
+#for uikit
+gem 'uikit-sass-rails'
 #for meta-tags
 gem 'meta-tags', :require => 'meta_tags'
 
-#for uikit
+
 
 
 
@@ -62,6 +58,11 @@ group :development, :test do
 end
 
 #for databae using mongodb
-gem "mongoid", "~> 4.0.0"
+
+gem "mongoid", github: 'mongoid/mongoid'
+
+gem 'bson_ext'
+#gem 'devise'
+gem 'sorcery'
 gem "connection_pool", "~> 2.0.0"
 
