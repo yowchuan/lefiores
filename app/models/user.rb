@@ -7,7 +7,10 @@ class User
   validates :password, confirmation: true
   validates :password_confirmation, presence: true
 
+  field :role, type: Symbol, default: 'florist'
+
   validates :email, uniqueness: true
 
+  has_one :store, :class_name  => 'User::Store'
   #field :crypted_password, type: String, default: ""
 end

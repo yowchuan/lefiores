@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_user_role_param, only: [:new]
 
   # GET /users
   # GET /users.json
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.role = params[:type]
   end
 
   # GET /users/1/edit
@@ -23,12 +25,20 @@ class UsersController < ApplicationController
 
   # POST /users
   # POST /users.json
-  def create
-    @user = User.new(user_params)
+  def create        
+    if params[:user][:password].blank?
+      flash.now.alert = 'Please provide password' 
+      render :new and return
+    end  
 
+    @user = User.new(user_params)
+    
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        login(@user.email, params[:user][:password])
+        #confirm_uri = 'http://' + @site_domain + '/confirm/' + @user.id.to_s + '/' + token
+        #format.html { redirect_to @user, notice: 'User was successfully created.' }
+        redirect_to root_url, :alert => 'Welcome to lefiores! lets setup your store!' and return
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -69,6 +79,14 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation, :type)
+    end
+
+    def check_user_role_param
+      if(params[:type] == 'florist' || params[:type] == 'user')
+        return true;
+      else
+        redirect_to root_url, alert: 'Invalid User Type Specified'
+      end      
     end
 end
