@@ -35,11 +35,12 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       if @user.save
-        login(@user.email, params[:user][:password])
-        #confirm_uri = 'http://' + @site_domain + '/confirm/' + @user.id.to_s + '/' + token
-        #format.html { redirect_to @user, notice: 'User was successfully created.' }
-        redirect_to root_url, :alert => 'Welcome to lefiores! lets setup your store!' and return
-        format.json { render :show, status: :created, location: @user }
+        user = login(@user.email, params[:user][:password])
+        if !user.has_store   
+          uri = '/store/new'    
+          redirect_to uri, :alert => 'Welcome to lefiores! lets setup your store!' and return
+          format.json { render :show, status: :created, location: @user }
+        end
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }

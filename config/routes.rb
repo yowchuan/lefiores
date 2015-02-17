@@ -8,6 +8,15 @@ Rails.application.routes.draw do
   post 'login' => 'user_sessions#create'
   get "logout" => "user_sessions#destroy"
   delete "logout" => "user_sessions#destroy"
+
+
+  ######### for store
+  
+  get 'store/new' => 'store#new' #view
+  post 'store/new' => 'store#create' #submit [post]
+  patch 'store/new' => 'store#create'  
+  
+  #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
   
   root 'welcome#index'
   # The priority is based upon order of creation: first created -> highest priority.
