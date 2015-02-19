@@ -1,9 +1,19 @@
-class StoreController < ApplicationController
-  before_filter :require_login  
+class BranchController < ApplicationController
+  before_filter :require_login
 
-  def new
+  #dashboard
+  def index
     @user = User.where(:id => current_user.id).first    
-  	@store = Store.find(:id => @user.store.id);  	  	
+    @store = @user.store
+
+    if @store.branch.present?  
+    end
+  end
+
+  def new  	
+  	@user = User.where(:id => current_user.id).first	  
+    @store = @user.store
+    @branch = Branch.new
   end
 
   def create

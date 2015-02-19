@@ -16,10 +16,10 @@ class UserSessionsController < ApplicationController
     if session[:user_id].present?
       #if store isn't setup yet
       if !user.has_store
-        uri = '/store/new'
+        uri = '/store/new'        
         msg = 'welcome to lefiores!'
       else        
-        uri = root_url          
+        uri = '/store/dashboard'          
         msg = 'welcome back!'
       end
       redirect_back_or_to uri, :notice => msg

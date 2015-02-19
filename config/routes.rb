@@ -10,11 +10,14 @@ Rails.application.routes.draw do
   delete "logout" => "user_sessions#destroy"
 
 
-  ######### for store
-  
+  ######### for store  
   get 'store/new' => 'store#new' #view
   post 'store/new' => 'store#create' #submit [post]
   patch 'store/new' => 'store#create'  
+
+
+  ######### for branch/dashboard
+  get 'store/dashboard' => 'branch#index' #view
   
   #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
   
