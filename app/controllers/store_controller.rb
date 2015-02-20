@@ -3,7 +3,11 @@ class StoreController < ApplicationController
 
   def new
     @user = User.where(:id => current_user.id).first    
-  	@store = Store.find(:id => @user.store.id);  	  	
+    if @user.has_store
+  	  @store = Store.find(:id => @user.store.id);  	  	
+    else
+      @store = Store.new 
+    end
   end
 
   def create
@@ -21,7 +25,7 @@ class StoreController < ApplicationController
 	  if @store.save  	  	  	 		  
 			if @user.update_attribute(:has_store, true)
 	  		#uri = '/' + @store.name + '/dashboard'
-	  		uri = root_url
+	  		uri = '/store/dashboard'
 	  		redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!' and return
 	  	end		  		 
     else

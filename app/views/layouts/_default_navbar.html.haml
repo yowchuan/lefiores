@@ -29,7 +29,21 @@
       %button.uk-button.uk-button-primary Submit
   .uk-navbar-content.uk-navbar-flip.uk-hidden-small
     -if current_user.present?
-      %a.uk-button.uk-button-primary{:href => "/logout"} Logout
+      .uk-button-dropdown{"data-uk-dropdown" => ""}
+        %button.uk-button
+          %i.uk-icon-ellipsis-v          
+        .uk-dropdown
+          %ul.uk-nav.uk-nav-dropdown
+            -if current_user.has_store
+              %li
+                %a{:href => "#"} 
+                  %i.uk-icon-money 
+                  My Store            
+            %li
+              %a{:href => "/logout"} 
+                %i.uk-icon-sign-out 
+                Logout
+      
     -else
       .uk-button-group
         %a.uk-button.uk-button-primary{:href => "/users/new?type=florist"} Florist

@@ -12,4 +12,7 @@ class Store
   has_many :images, :class_name => 'Store::Image'
   belongs_to :user
 
+  validates :business_reg_no, uniqueness: true
+  validates :page_url, uniqueness: true
+
 end
