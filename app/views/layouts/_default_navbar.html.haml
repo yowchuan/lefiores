@@ -41,10 +41,11 @@
                                               
           .uk-dropdown
             %ul.uk-nav.uk-nav-dropdown   
-              -@store_branches.each do |branch|           
-                %li
-                  %a{:href => "/store/dashboard"}                   
-                    = branch.sub_name                  
+              - if !@store_branches.nil?
+                -@store_branches.each do |branch|           
+                  %li
+                    %a{:href => "/store/dashboard"}                   
+                      = branch.sub_name                  
                   
       .uk-button-dropdown{"data-uk-dropdown" => ""}
         %button.uk-button
