@@ -20,16 +20,17 @@ class StoreController < ApplicationController
 	  	@user.has_store = true		        
 	  	@user.errors.full_messages 
 	  end
-	  
-	  
-	  if @store.save  	  	  	 		  
-			if @user.update_attribute(:has_store, true)
-	  		#uri = '/' + @store.name + '/dashboard'
-	  		uri = '/store/dashboard'
-	  		redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!' and return
-	  	end		  		 
-    else
-      render :new
+	  respond_to do |format|
+      if @store.save
+        if @user.update_attribute(:has_store, true)
+          #uri = '/' + @store.name + '/dashboard'
+          uri = '/store/dashboard'
+          redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!' and return        
+          format.json { render :show, status: :created, location: @store }
+        else
+          render :new
+        end  
+      end
     end	  
   end  
 
@@ -39,7 +40,7 @@ class StoreController < ApplicationController
 
   private
   def site_params
-    params.require(:store).permit(:business_reg_no, :contact_no, :page_url)
+    params.require(:store).permit(:business_reg_no, :contact_no, :page_url,:name)
   end
 
 end

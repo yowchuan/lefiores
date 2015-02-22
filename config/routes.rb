@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :users
   resources :users_sessions
-
+  resources :stores  
+  resources :branches, :controller => 'branch' ,:path => 'branch'
   resources :tests
 
   get 'login' => 'user_sessions#new'
@@ -18,6 +19,8 @@ Rails.application.routes.draw do
 
   ######### for branch/dashboard
   get 'store/dashboard' => 'branch#index' #view
+  get 'store/branch/new' => 'branch#new' #view
+  get 'store/settings' => 'branch#settings' #view
   
   #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
   

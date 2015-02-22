@@ -11,6 +11,10 @@
     %li= message
 
   .field
+    = f.label 'Store Name'
+    %br
+    = f.text_field :name, :placeholder => 'Store Name'
+  .field
     = f.label 'Business Registration Number'
     %br
     = f.text_field :business_reg_no, :placeholder => 'Business Registration Number'

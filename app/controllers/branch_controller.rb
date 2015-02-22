@@ -1,51 +1,87 @@
 class BranchController < ApplicationController
   before_filter :require_login
+  before_filter :set_store
 
   #dashboard
   def index
     @user = User.where(:id => current_user.id).first    
-    @store = @user.store
-
-    if @store.branch.present?  
+    @store = @user.store            
+    if @store.branch.present?
+      flash[:notice] = 'This is your dashboard'
+      @store_branches = @store.branches
+      @branch = @store.branch
+    else      
+      redirect_to '/store/branch/new', :notice => 'You haven\'t setup your main branch. Lets set it up promise it won\'t take long'
     end
   end
 
-  def new  	
-  	@user = User.where(:id => current_user.id).first	  
-    @store = @user.store
-    @branch = Branch.new
+  def new  	  	  
+    @branch = Store::Branch.new    
   end
 
-  def create
-  	@store = Store.new(site_params)
-  	@store.user_id = current_user.id.to_s
-  	@store.user_email = current_user.email 
+  #def create
+  #	@branch = Store::Branch.new(branch_params)  	  	  
+	#  @branch.store_id = @store.id
+	  
+	#  if @branch.save  	
+  #    @store.branch = @branch  	  	 		  			
+ # 		uri = root_url
+ # 		redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @store.branch.sub_name and return	  	
+  #  else
+  #    render :new
+  #  end	  
+  #end  
 
-	  @user = User.where(:id => current_user.id.to_s).first
-	  if @user
-	  	@user.has_store = true		        
-	  	@user.errors.full_messages 
-	  end
-	  
-	  
-	  if @store.save  	  	  	 		  
-			if @user.update_attribute(:has_store, true)
-	  		#uri = '/' + @store.name + '/dashboard'
-	  		uri = root_url
-	  		redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!' and return
-	  	end		  		 
-    else
-      render :new
-    end	  
-  end  
+  # POST /admin/companies
+  # POST /admin/companies.json
+  def create    
+    @branch = Store::Branch.new(branch_params)  
+    @branch.store_id = @store.id 
+
+    respond_to do |format|      
+      if @branch.save
+        @store.branch_id = @branch.id.to_s
+        @store.save
+
+        uri = root_url
+        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return      
+        format.json { render :show, status: :created, location: @branch }
+      else
+        format.html { render :new }
+        format.json { render json: @company.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def destroy	
 	
   end
 
+  #settings tab
+  def settings
+    @user = User.where(:id => current_user.id).first    
+    @store = @user.store    
+  end
+
+  def set_store
+    @user = User.where(:id => current_user.id).first    
+    @store = @user.store  
+  end
+
   private
-  def site_params
-    params.require(:store).permit(:business_reg_no, :contact_no, :page_url)
+  def branch_params
+    if params[:store_branch][':cut_off_time(1i)'].present?
+      params[:store_branch][:date] = params[:store_branch][':cut_off_time(1i)'] + '-' + params['news'][':cut_off_time(2i)'] + '-' + params['news'][':cut_off_time(3i)'] + 'T' + params[:store_branch][':cut_off_time(4i)'] + ':' + params[:store_branch][':cut_off_time(5i)'] + ":00Z"
+      params[:store_branch].delete(':cut_off_time(1i)')
+      params[:store_branch].delete(':cut_off_time(2i)')
+      params[:store_branch].delete(':cut_off_time(3i)')
+      params[:store_branch].delete(':cut_off_time(4i)')
+      params[:store_branch].delete(':cut_off_time(5i)')
+    end
+    if params[:store_branch]['cut_off_time(1i)'].present?
+      params[:store_branch][:cut_off_time] = params[:store_branch]['cut_off_time(1i)'];
+    end
+    params.require(:store_branch).permit(:postal_code, :contact_no, :sub_name,:business_hours)
   end
 
 end
