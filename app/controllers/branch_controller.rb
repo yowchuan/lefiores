@@ -5,11 +5,10 @@ class BranchController < ApplicationController
   #dashboard
   def index
     @user = User.where(:id => current_user.id).first    
-    @store = @user.store            
+    @store = @user.store
+    @lefiores_tab_active = :dashboard            
     if @store.branch.present?
-      flash[:notice] = 'This is your dashboard'
-      @store_branches = @store.branches
-      @branch = @store.branch
+      flash[:notice] = 'This is your dashboard'      
     else      
       redirect_to '/store/branch/new', :notice => 'You haven\'t setup your main branch. Lets set it up promise it won\'t take long'
     end
@@ -58,15 +57,16 @@ class BranchController < ApplicationController
   end
 
   #settings tab
-  def settings
-    @user = User.where(:id => current_user.id).first    
-    @store = @user.store    
+  def settings    
+    @lefiores_tab_active = :settings
   end
 
   def set_store
     @user = User.where(:id => current_user.id).first    
     @store = @user.store  
-  end
+    @store_branches = @store.branches
+    @branch = @store.branch
+  end  
 
   private
   def branch_params

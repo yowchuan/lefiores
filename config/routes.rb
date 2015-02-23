@@ -13,8 +13,8 @@ Rails.application.routes.draw do
 
   ######### for store  
   get 'store/new' => 'store#new' #view
-  post 'store/new' => 'store#create' #submit [post]
-  patch 'store/new' => 'store#create'  
+  post 'store/new' => 'store#create' #submit [post]  
+  patch 'store/update' => 'store#update'  
 
 
   ######### for branch/dashboard

@@ -1,16 +1,24 @@
 .uk-margin-top
   %ul.uk-tab    
-    %li
+    -if @lefiores_tab_active == :dashboard    
       %li.uk-active
         = link_to 'Dashboard', '/store/dashboard'
+    -else
+      %li
+        = link_to 'Dashboard', '/store/dashboard'    
     %li
       = link_to 'Order', '/store/orders'
     %li
       = link_to 'Catalog', '/store/orders'  
     %li
       = link_to 'Stats', '/store/orders'  
-    %li
-      = link_to 'Settings', '/store/settings'  
+    -if @lefiores_tab_active == :settings    
+      %li.uk-active
+        = link_to 'Settings', '/store/settings'  
+    -else
+      %li
+        = link_to 'Settings', '/store/settings'  
+            
 
   
 

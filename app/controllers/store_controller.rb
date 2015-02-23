@@ -1,5 +1,6 @@
 class StoreController < ApplicationController
   before_filter :require_login  
+  before_action :set_store
 
   def new
     @user = User.where(:id => current_user.id).first    
@@ -32,15 +33,34 @@ class StoreController < ApplicationController
         end  
       end
     end	  
+  end
+  
+  def update
+    respond_to do |format|
+      if @store.update(site_params)
+        format.html { redirect_to '/store/settings', notice: 'Store was successfully updated.' }
+        format.json { render :show, status: :ok, location: @store }
+      else
+        format.html { render :edit }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
+      end
+    end
   end  
 
   def destroy	
 	
-  end
+  end  
+
+  def set_store
+    @user = User.where(:id => current_user.id).first    
+    @store = @user.store    
+  end  
 
   private
   def site_params
     params.require(:store).permit(:business_reg_no, :contact_no, :page_url,:name)
   end
+
+ 
 
 end
