@@ -1,6 +1,6 @@
 class BranchController < ApplicationController
   before_filter :require_login
-  before_filter :set_store
+  before_action :set_store
 
   #dashboard
   def index
@@ -15,7 +15,11 @@ class BranchController < ApplicationController
   end
 
   def new  	  	  
-    @branch = Store::Branch.new    
+    @branch = Store::Branch.new   
+    @user = User.where(:id => current_user.id).first    
+    @store = @user.store  
+    @store_branches = @store.branches
+     
   end
 
   #def create
