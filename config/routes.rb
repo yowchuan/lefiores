@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :users
   resources :users_sessions
-  resources :stores  
+  #resources :stores  
+  resources :stores
   resources :branches, :controller => 'branch' ,:path => 'branch'
   resources :tests
 
@@ -10,10 +11,13 @@ Rails.application.routes.draw do
   get "logout" => "user_sessions#destroy"
   delete "logout" => "user_sessions#destroy"
 
+  
+  get 'register' => 'users#new'
+  post 'register' => 'users#create'
 
   ######### for store  
   get 'store/new' => 'store#new' #view
-  post 'store/new' => 'store#create' #submit [post]  
+  post 'store/create' => 'store#create' #submit [post]  
   patch 'store/update' => 'store#update'  
 
 

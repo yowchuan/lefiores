@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_user_role_param, only: [:new]
+  before_action :check_user_role_param, only: [:new, :create]
 
   # GET /users
   # GET /users.json
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @user.role = params[:type]
+    @type = params[:type]
   end
 
   # GET /users/1/edit
@@ -26,12 +26,18 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create        
-    if params[:user][:password].blank?
-      flash.now.alert = 'Please provide password' 
+    @user = User.new(user_params)
+    if params[:user][:email].blank?
+      flash.now.alert = 'Please provide email address' 
+      #redirect_to '/users/new?type=' + params[:type], :alert => 'email cannot be blank' and return  
+
+      @user = User.new
       render :new and return
     end  
-
-    @user = User.new(user_params)
+    if params[:user][:password].blank?
+      flash.now.alert = 'Please provide password'       
+      render :new and return
+    end      
     
     respond_to do |format|
       if @user.save

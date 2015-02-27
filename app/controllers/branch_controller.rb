@@ -6,15 +6,29 @@ class BranchController < ApplicationController
   def index
     @user = User.where(:id => current_user.id).first    
     @store = @user.store
-    @lefiores_tab_active = :dashboard            
+    @lefiores_tab_active = :dashboard     
+
     if @store.branch.present?
       flash[:notice] = 'This is your dashboard'      
     else      
-      redirect_to '/store/branch/new', :notice => 'You haven\'t setup your main branch. Lets set it up promise it won\'t take long'
+      @branch_name = 'main'
+      @branch_contact_no = @store.contact_no
+      #redirect_to '/store/branch/new',:branch_name => @branch_name, :branch_contact_no => @branch_contact_no      
+      #redirect_to '/store/branch/new'(:id => 1, :contact_id => 3, :name => 'suleman')
+      redirect_to :controller => "branch", :action => "new", :branch_name => @branch_name, :branch_contact_no => @branch_contact_no
     end
   end
 
   def new  	  	  
+    @days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+    @minutes = ['00','15','30','45'];
+    @am_pm = ['am','pm'];
+    
+
+    if params[:branch_name].present?
+      @branch_name = 'main'
+      @branch_contact_no = @store.contact_no + '1'
+    end
     @branch = Store::Branch.new   
     @user = User.where(:id => current_user.id).first    
     @store = @user.store  
@@ -68,8 +82,10 @@ class BranchController < ApplicationController
   def set_store
     @user = User.where(:id => current_user.id).first    
     @store = @user.store  
-    @store_branches = @store.branches
-    @branch = @store.branch
+    if @store
+      @store_branches = @store.branches
+      @branch = @store.branch
+    end
   end  
 
   private
@@ -85,7 +101,7 @@ class BranchController < ApplicationController
     if params[:store_branch]['cut_off_time(1i)'].present?
       params[:store_branch][:cut_off_time] = params[:store_branch]['cut_off_time(1i)'];
     end
-    params.require(:store_branch).permit(:postal_code, :contact_no, :sub_name,:business_hours)
+    params.require(:store_branch).permit(:contact_no, :sub_name,:business_hours)
   end
 
 end

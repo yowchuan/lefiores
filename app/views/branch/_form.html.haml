@@ -1,41 +1,67 @@
 -#= form_for(@branch, :html=> {:multipart => true}) do |f|
 = form_for(@branch,:html=> {:multipart => true, :class => 'uk-form'},  :url => {:controller => 'branch'}) do |f|
-	- if @branch.errors.any?
-		#error_explanation
-		= pluralize(@branch.errors.count, "error")
-		prohibited this @branch from being saved:
+  - if @branch.errors.any?
+    #error_explanation
+    = pluralize(@branch.errors.count, "error")
+    prohibited this @branch from being saved:
 
-	%ul
-	- @branch.errors.full_messages.each do |message|
-		%li= message
+  %ul
+  - @branch.errors.full_messages.each do |message|
+    %li= message
 
-	.field
-		= f.label 'Branch Name:'
-		%br												
-		-if @store.name.present?
-			= @store.name
-		= f.text_field :sub_name, :placeholder => '<melaka>'    	  
+  .field
+    = f.label 'Branch Name:'
+    %br                       
+    -if @store.name.present?
+      %strong
+        = @store.name
+    \-
+    -if @branch_name.present? 
+      = @branch_name
+    -else
+      = f.text_field :sub_name, :placeholder => '<melaka>'        
 
-	.field
-		= f.label 'Contact Number'
-		%br
-		= f.text_field :contact_no, :placeholder => 'Contact Number'
-	.field
-		= f.label 'Postal Code'
-		%br
-		= f.text_field :postal_code, :placeholder => 'Postal Code'
-	.field
-		= f.label 'Cut Off Time (24 hour format)'
-		%br
-		= f.datetime_select :cut_off_time, :minute_step => 15
-	.field
-		= f.label 'Business Hours'
-		%br
-		= f.text_area :business_hours,:cols=>80, :rows=>5,:placeholder=> "Weekdays: 9am to 7pm \nSaturdays: 9am - 5pm", :class => 'uk-width-1-1'
-		
-	
-	
+  .field
+    = f.label 'Contact Number'
+    %br
+    -if @branch_contact_no.present? 
+      =@branch_contact_no
+    -else
+      = f.text_field :contact_no, :placeholder => 'Contact Number'
+  .field
+    = f.label 'Business Hours'
+    %br
+    -@days.each do |day|
+      = day      
+      %select                  
+        -(1..12).each do |i|
+          %option
+            =i
+      
+      %select                  
+        -@minutes.each do |i|
+          %option
+            =i 
+      %select                  
+        -@am_pm.each do |i|
+          %option
+            =i       
+      %br  
+    = f.time_field :business_hours
+    
 
-	.actions
-		= f.submit 'Setup My Main Branch'
+    -#= f.time_select :business_hours['test'],:name => "form[foo][bar]"
+    =text_field :foo, :bar, :name => "business_hours[monday][hour]"
+    = f.text_area :business_hours,:cols=>80, :rows=>5,:placeholder=> "Weekdays: 9am to 7pm \nSaturdays: 9am - 5pm", :class => 'uk-width-1-1'    
+  .field
+    = f.label 'Cut Off Time (24 hour format)'
+    %br
+    = f.datetime_select :cut_off_time, :minute_step => 15
+  
+    
+  
+  
+
+  .actions
+    = f.submit 'Setup My Main Branch'
 

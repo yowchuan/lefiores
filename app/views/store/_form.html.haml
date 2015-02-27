@@ -1,5 +1,5 @@
 
-= form_for(@store, :html=> {:multipart => true},:url => {:controller => 'store',:action=>"new"}) do |f|
+= form_for(@store, :html=> {:multipart => true},:url => {:controller => 'store',:action=>"create"}) do |f|
 
   - if @store.errors.any?
     #error_explanation
@@ -25,7 +25,8 @@
   .field
     = f.label 'Website/Page Url:'
     %br
-    = f.text_field :page_url, :placeholder => 'www.lefiores.com/<your-store-url>'    
+    www.lefiores.com/
+    = f.text_field :page_url, :placeholder => ''    
   
 
   .actions

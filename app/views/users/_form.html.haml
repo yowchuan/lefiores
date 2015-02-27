@@ -1,11 +1,32 @@
-= form_for @user do |f|
+= form_for @user, :url => { :action => :create, :type => 'florist'} do |f|
   - if @user.errors.any?
     #error_explanation
       %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
       %ul
         - @user.errors.full_messages.each do |msg|
           %li= msg
-
+  
+  .uk-form-row
+    %label.uk-form-label{:for => "form-s-it"} Email
+    .uk-form-controls.uk-width-1-1 
+      = f.email_field :email, autofocus: true ,:placeholder => 'Email Address', :id => 'form-s-it'
+      -#%input#form-s-it{:placeholder => "youremail@example.com", :type => "email", }
+  .uk-form-row
+    %label.uk-form-label{:for => "form-s-it"} Password
+    .uk-form-controls
+      .uk-form-password
+        = f.password_field :password ,:placeholder => 'password', :id => 'form-s-it'
+        -#%input{:type => "password", :value => ""}/
+        %a.uk-form-password-toggle{"data-uk-form-password" => "", :href => ""} Show
+  .uk-form-row
+    %label.uk-form-label{:for => "form-s-it"} Confirm Password
+    .uk-form-controls
+      .uk-form-password
+        -#%input{:type => "password", :value => ""}/
+        = f.password_field :password_confirmation ,:placeholder => 'confirm password', :id => 'form-s-it'
+        %a.uk-form-password-toggle{"data-uk-form-password" => "", :href => ""} Show
+    = f.submit 'Save'  
+-#          
   .field
     = f.label :email
     = f.text_field :email

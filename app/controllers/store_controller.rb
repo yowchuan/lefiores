@@ -19,20 +19,24 @@ class StoreController < ApplicationController
 	  @user = User.where(:id => current_user.id.to_s).first
 	  if @user
 	  	@user.has_store = true		        
-	  	@user.errors.full_messages 
+	  	#@user.errors.full_messages 
 	  end
-	  respond_to do |format|
-      if @store.save
-        if @user.update_attribute(:has_store, true)
-          #uri = '/' + @store.name + '/dashboard'
-          uri = '/store/dashboard'
-          redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!' and return        
-          format.json { render :show, status: :created, location: @store }
-        else
-          render :new
-        end  
-      end
-    end	  
+	  
+    if @store.save
+      if @user.update_attribute(:has_store, true)
+        #uri = '/' + @store.name + '/dashboard'
+        uri = '/store/dashboard'
+        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!' and return        
+        #format.json { render :show, status: :created, location: @store }
+      else
+        uri = '/store/dashboard'
+        redirect_to uri, :notice => 'User is not updated' and return        
+      end  
+    else      
+      uri = '/store/dashboard'
+      redirect_to uri, :notice => 'Store is not updated' and return        
+    end
+    
   end
   
   def update

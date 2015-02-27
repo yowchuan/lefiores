@@ -10,7 +10,7 @@ class Store
   field :user_email, type: String
 
   has_many :branches, :class_name => 'Store::Branch'
-  has_many :images, :class_name => 'Store::Image'
+  #has_many :images, :class_name => 'Store:key => "value", :Image'
   belongs_to :user
 
   validates :business_reg_no, uniqueness: true
