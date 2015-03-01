@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   patch 'store/update' => 'store#update'  
 
 
+  ######### for branch setup
+  get 'store/branch/:branch_id/edit' => 'branch#delivery_areas'
+  patch 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
+
   ######### for branch/dashboard
   get 'store/dashboard' => 'branch#index' #view
   get 'store/branch/new' => 'branch#new' #view

@@ -1,6 +1,7 @@
 class BranchController < ApplicationController
   before_filter :require_login
   before_action :set_store
+  before_action :set_days, only:[:new]
 
   #dashboard
   def index
@@ -19,15 +20,16 @@ class BranchController < ApplicationController
     end
   end
 
-  def new  	  	  
-    @days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-    @minutes = ['00','15','30','45'];
-    @am_pm = ['am','pm'];
-    
+  def new  	  	      
 
     if params[:branch_name].present?
       @branch_name = 'main'
       @branch_contact_no = @store.contact_no + '1'
+    end
+
+    if !@store.branch.present?
+      @branch_name = 'main'
+      @branch_contact_no = @store.contact_no
     end
     @branch = Store::Branch.new   
     @user = User.where(:id => current_user.id).first    
@@ -74,6 +76,10 @@ class BranchController < ApplicationController
 	
   end
 
+  def set_days
+    @days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
+  end
+
   #settings tab
   def settings    
     @lefiores_tab_active = :settings
@@ -85,23 +91,28 @@ class BranchController < ApplicationController
     if @store
       @store_branches = @store.branches
       @branch = @store.branch
-    end
+    end    
   end  
 
+
   private
-  def branch_params
-    if params[:store_branch][':cut_off_time(1i)'].present?
-      params[:store_branch][:date] = params[:store_branch][':cut_off_time(1i)'] + '-' + params['news'][':cut_off_time(2i)'] + '-' + params['news'][':cut_off_time(3i)'] + 'T' + params[:store_branch][':cut_off_time(4i)'] + ':' + params[:store_branch][':cut_off_time(5i)'] + ":00Z"
-      params[:store_branch].delete(':cut_off_time(1i)')
-      params[:store_branch].delete(':cut_off_time(2i)')
-      params[:store_branch].delete(':cut_off_time(3i)')
-      params[:store_branch].delete(':cut_off_time(4i)')
-      params[:store_branch].delete(':cut_off_time(5i)')
-    end
-    if params[:store_branch]['cut_off_time(1i)'].present?
-      params[:store_branch][:cut_off_time] = params[:store_branch]['cut_off_time(1i)'];
-    end
-    params.require(:store_branch).permit(:contact_no, :sub_name,:business_hours)
+  def branch_params    
+    
+    params.require(:store_branch).permit(:contact_no, :sub_name,
+                :business_hours_from_monday,
+                :business_hours_from_tuesday,
+                :business_hours_from_wednesday,
+                :business_hours_from_thursday,  
+                :business_hours_from_friday,
+                :business_hours_from_saturday,
+                :business_hours_from_sunday,
+                :business_hours_to_monday,
+                :business_hours_to_tuesday,
+                :business_hours_to_wednesday,
+                :business_hours_to_thursday,
+                :business_hours_to_friday,
+                :business_hours_to_saturday,
+                :business_hours_to_sunday)
   end
 
 end

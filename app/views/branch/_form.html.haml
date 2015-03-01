@@ -32,31 +32,16 @@
     = f.label 'Business Hours'
     %br
     -@days.each do |day|
-      = day      
-      %select                  
-        -(1..12).each do |i|
-          %option
-            =i
-      
-      %select                  
-        -@minutes.each do |i|
-          %option
-            =i 
-      %select                  
-        -@am_pm.each do |i|
-          %option
-            =i       
-      %br  
-    = f.time_field :business_hours
-    
-
-    -#= f.time_select :business_hours['test'],:name => "form[foo][bar]"
-    =text_field :foo, :bar, :name => "business_hours[monday][hour]"
-    = f.text_area :business_hours,:cols=>80, :rows=>5,:placeholder=> "Weekdays: 9am to 7pm \nSaturdays: 9am - 5pm", :class => 'uk-width-1-1'    
+      .field
+        = f.label day            
+        = f.time_field 'business_hours_from_'+day.to_s
+        to
+        = f.time_field 'business_hours_to_'+day.to_s
   .field
-    = f.label 'Cut Off Time (24 hour format)'
-    %br
-    = f.datetime_select :cut_off_time, :minute_step => 15
+    = f.label 'Cut Off Time'
+    %br    
+    = f.time_field :cut_off_time
+    
   
     
   
