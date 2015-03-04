@@ -1,0 +1,34 @@
+
+= form_for(@store, :html=> {:multipart => true},:url => {:controller => 'store',:action=>"create"}) do |f|
+
+  - if @store.errors.any?
+    #error_explanation
+    = pluralize(@store.errors.count, "error")
+    prohibited this @store from being saved:
+
+  %ul
+  - @store.errors.full_messages.each do |message|
+    %li= message
+
+  .field
+    = f.label 'Store Name'
+    %br
+    = f.text_field :name, :placeholder => 'Store Name'
+  .field
+    = f.label 'Business Registration Number'
+    %br
+    = f.text_field :business_reg_no, :placeholder => 'Business Registration Number'
+  .field
+    = f.label 'Contact Number'
+    %br
+    = f.text_field :contact_no, :placeholder => 'Contact Number'
+  .field
+    = f.label 'Website/Page Url:'
+    %br
+    www.lefiores.com/
+    = f.text_field :page_url, :placeholder => ''    
+  
+
+  .actions
+    = f.submit 'Setup My Store'
+

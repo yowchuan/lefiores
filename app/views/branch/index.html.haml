@@ -1,0 +1,10 @@
+= render 'branch/dashboard_tabs'
+
+-if @store.has_branch?
+  %h1 
+    This is the dashboard
+-else
+  = render 'branch/form'
+
+
+ 

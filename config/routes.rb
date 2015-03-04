@@ -1,5 +1,43 @@
 Rails.application.routes.draw do
+  resources :users
+  resources :users_sessions
+  #resources :stores  
+  resources :stores
+  resources :branches, :controller => 'branch' ,:path => 'branch'
   resources :tests
+
+  get 'login' => 'user_sessions#new'
+  post 'login' => 'user_sessions#create'
+  get "logout" => "user_sessions#destroy"
+  delete "logout" => "user_sessions#destroy"
+
+  
+  get 'register' => 'users#new'
+  post 'register' => 'users#create'
+
+  ######### for store  
+  get 'store/new' => 'store#new' #view
+  post 'store/create' => 'store#create' #submit [post]  
+  patch 'store/update' => 'store#update'  
+
+
+  ######### for branch setup
+  get 'store/branch/:id/edit_delivery_areas' => 'branch#edit_delivery_areas'
+  patch 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
+  post 'branch/create' => 'branch#create' #submit [post]  
+  #get 'branch/:id/edit' => 'branch#edit'
+  #post 'branch/:site_id/update' => 'sites#update'
+  #patch 'sites/:site_id/update' => 'sites#update'
+
+
+  ######### for branch/dashboard
+  get 'store/dashboard' => 'branch#index' #view
+  get 'store/branch/new' => 'branch#new' #view
+
+  get 'store/settings' => 'branch#settings' #view
+  
+  #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
+  
   root 'welcome#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

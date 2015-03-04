@@ -1,0 +1,55 @@
+-#= form_for(@branch, :html=> {:multipart => true}) do |f|
+-#= form_for(@branch,:html=> {:multipart => true, :class => 'uk-form'},:url => {:controller => 'branch',:action=>"create"}) do |f|
+
+= form_for(@branch, :html=> {:multipart => true},:url => {:controller => 'branch',:action=>"create"}) do |f|
+  - if @branch.errors.any?
+    #error_explanation
+    = pluralize(@branch.errors.count, "error")
+    prohibited this @branch from being saved:
+
+  %ul
+  - @branch.errors.full_messages.each do |message|
+    %li= message
+
+  .field
+    = f.label 'Branch Name:'
+    %br                       
+    -if @store.name.present?
+      %strong
+        = @store.name
+    \-
+    -if @branch_name.present? 
+      = @branch_name
+      = f.hidden_field :sub_name, :value => @branch_name
+    -else
+      = f.text_field :sub_name, :placeholder => '<melaka>'        
+
+  .field
+    = f.label 'Contact Number'
+    %br
+    -if @branch_contact_no.present? 
+      =@branch_contact_no
+    -else
+      = f.text_field :contact_no, :placeholder => 'Contact Number'
+  .field
+    = f.label 'Business Hours'
+    %br
+    -@days.each do |day|
+      .field
+        = f.label day            
+        = f.time_field 'business_hours_from_'+day.to_s
+        to
+        = f.time_field 'business_hours_to_'+day.to_s
+  .field
+    = f.label 'Cut Off Time'
+    %br    
+    = f.time_field :cut_off_time
+    
+  
+    
+  
+  
+
+  .actions
+    = f.submit 'Setup My Main Branch'
+

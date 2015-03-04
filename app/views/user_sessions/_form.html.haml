@@ -1,0 +1,31 @@
+.uk-vertical-align-middle.uk-cover-container  
+  %div{:style=>'background:#fff; padding:20px;margin-top:20px;'}
+    -#.form-logo
+      =image_tag(t(:dark_logo), width: "500", :class => 'uk-margin-bottom')
+
+    .uk-grid
+      .uk-width-1-2
+        %button.uk-width-1-1.uk-button.uk-button-large.uk-text-nowrap{:style=>'background:#39f;color:#fff;text-shadow:none;'}
+          %a{:href=>'/auth/twitter', :style=>'color:#fff;'}
+            %i.uk-icon-twitter-square
+            Login with Twitter
+
+      .uk-width-1-2
+        %button.uk-width-1-1.uk-button.uk-button-large.uk-text-nowrap{:style=>'background:#3b5998;text-shadow:none;box-shadow:0 2px 2px -2px rgba(0, 0, 0, .52);'}
+          %a{:href=>'/auth/facebook', :style=>'color:#fff;'}
+            %i.uk-icon-facebook-square
+            Login with Facebook
+    OR
+    =form_tag :login, :class => 'uk-panel uk-panel-box'
+
+    .uk-form-row      
+      = text_field :user,:email, autofocus:true, :placeholder => 'email', :class => 'uk-width-1-1 uk-form-large'
+    .uk-form-row
+      = password_field :user, :password, autocomplete: "off", :placeholder => 'password', :class => 'uk-width-1-1 uk-form-large'
+    .uk-form-row
+      = submit_tag 'login', :class => 'uk-width-1-1 uk-button uk-button-primary uk-button-large'
+    .uk-form-row.uk-text-note
+      %label.uk-float-left
+        = check_box :user,  :remember_me, {:checked => true}
+        Remember Me
+      %a.uk-float-right.uk-link.uk-link-muted{:href => "/reset"} Forgot Password?

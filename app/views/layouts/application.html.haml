@@ -14,8 +14,10 @@
   = csrf_meta_tags  
 
 %body
-
+  
   = render 'layouts/default_navbar'
   %div.uk-container.uk-container-center
+    .uk-margin-top
+      = render 'layouts/notice'
     = yield
 

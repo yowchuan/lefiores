@@ -1,3 +1,16 @@
+production:
+  sessions:
+    default:
+      database: lefiores_prod      
+      hosts:
+        - localhost:27017
+      options:
+        read: primary
+        # In the test environment we lower the retries and retry interval to
+        # low amounts for fast failures.
+        max_retries: 30
+        retry_interval: 0
+
 development:
   # Configure available database sessions. (required)
   sessions:
@@ -5,7 +18,7 @@ development:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      database: lefiores_development
+      database: lefiores_development      
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
@@ -59,6 +72,7 @@ test:
   sessions:
     default:
       database: lefiores_test
+      allow_dynamic_fields: false
       hosts:
         - localhost:27017
       options:
@@ -67,3 +81,4 @@ test:
         # low amounts for fast failures.
         max_retries: 1
         retry_interval: 0
+

@@ -1,0 +1,26 @@
+%h1 Listing users
+
+%table
+  %tr
+    %th Email
+    %th Crypted password
+    %th Salt
+    %th
+    %th
+    %th
+
+  - @users.each do |user|
+    %tr
+      -if user.email.present?      
+        %td= user.email
+      -if user.encrypted_password != nil?      
+        %td= user.encrypted_password
+      -if user.salt.present?        
+        %td= user.salt
+      %td= link_to 'Show', user
+      %td= link_to 'Edit', edit_user_path(user)
+      %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New User', new_user_path

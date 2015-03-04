@@ -1,22 +1,8 @@
 class WelcomeController < ApplicationController
-  before_action :get_yoyaku_app
+  before_action :get_yoyaku_app   
 
   def index
-    #Format.with(database: 'test').drop()
-    #Format.with(database: "test").create(:aaa => {:bbb => 'asdfa', :ccc=>{:ddd=>'asdf'}},:bbb => 'asdfa', :field => 'asdfa')
-    #a = Format.with(database: "test").new()
-    #a.aaa = 'asdfa'
-    #a.save()
-    #User.with(database: "mon_development").create
-    #a = User.new(:name => 'asfa', :email => 'asdfa', :password => 'pppppppp')
-    #a.password = 'ppp'
-    #a.save
-    #@users = User.all()
-
-    #@updated_news = updated_news
-    #@topic_pages = updated_topic_pages
-    #set_update_site_and_news
-
+    
   end
   def about
     @sitepage = Sitepage.where(:name => 'about').order_by(:id.desc).first
@@ -115,6 +101,8 @@ class WelcomeController < ApplicationController
       @yoyaku_apps = YoyakuApp.order_by(:id.desc).limit(5)
     end
   end
+
+
    
 
 end

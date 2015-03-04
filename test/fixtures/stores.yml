@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  img_url: 
+  business_reg_no: 
+  contact_no: 
+  business_hours: MyText
+  cut_off_time: 
+
+two:
+  img_url: 
+  business_reg_no: 
+  contact_no: 
+  business_hours: MyText
+  cut_off_time: 
