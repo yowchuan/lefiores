@@ -33,8 +33,8 @@ class StoreController < ApplicationController
         redirect_to uri, :notice => 'User is not updated' and return        
       end  
     else      
-      uri = '/store/dashboard'
-        redirect_to uri, :notice => 'store is not updated' and return        
+      
+      render :new, :notice => 'store is not updated' and return        
     end
     
   end

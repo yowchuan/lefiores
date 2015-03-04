@@ -1,39 +1,43 @@
 class BranchController < ApplicationController
   before_filter :require_login
   before_action :set_store
-  before_action :set_days, only:[:new]
+  before_action :set_branch, only:[:create,:index,:edit_delivery_areas]  
+  before_action :set_days, only:[:new, :create,:index]
 
   #dashboard
   def index
-    @user = User.where(:id => current_user.id).first    
-    @store = @user.store
     @lefiores_tab_active = :dashboard     
-
-    if @store.branch.present?
-      flash[:notice] = 'This is your dashboard'      
+    @store = Store.where(:user_id => current_user.id.to_s).first    
+    if @store.has_branch
+      @branch = Store::Branch.where(:id => @store.current_branch_id).first;       
+    else
+      @branch = Store::Branch.new 
+    end
+   
+    if @store.current_branch_id.present?
+      flash[:notice] = 'This is your dashboard'      + @store.current_branch_id
     else      
-      @branch_name = 'main'
-      @branch_contact_no = @store.contact_no
-      #redirect_to '/store/branch/new',:branch_name => @branch_name, :branch_contact_no => @branch_contact_no      
-      #redirect_to '/store/branch/new'(:id => 1, :contact_id => 3, :name => 'suleman')
-      redirect_to :controller => "branch", :action => "new", :branch_name => @branch_name, :branch_contact_no => @branch_contact_no
+      
+      #redirect_to :controller => "branch", :action => "new", :branch_name => @branch_name, :branch_contact_no => @branch_contact_no
     end
   end
 
-  def new  	  	      
-
-    if params[:branch_name].present?
-      @branch_name = 'main'
-      @branch_contact_no = @store.contact_no + '1'
-    end
-
-    if !@store.branch.present?
-      @branch_name = 'main'
+  def new  	  	          
+      
+    if !@store.has_branch?
+      if params[:branch_name].present?
+        @branch_name = 'main'
+        @branch_contact_no = @store.contact_no + '1'
+      else
+         @branch_name = 'main'
       @branch_contact_no = @store.contact_no
+      end
+     
     end
+
     @branch = Store::Branch.new   
     @user = User.where(:id => current_user.id).first    
-    @store = @user.store  
+    @store = Store.where(:user_id => current_user.id.to_s).first 
     @store_branches = @store.branches
      
   end
@@ -54,27 +58,39 @@ class BranchController < ApplicationController
   # POST /admin/companies
   # POST /admin/companies.json
   def create    
-    @branch = Store::Branch.new(branch_params)  
-    @branch.store_id = @store.id 
-
-    respond_to do |format|      
-      if @branch.save
-        @store.branch_id = @branch.id.to_s
-        @store.save
-
-        uri = root_url
-        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return      
-        format.json { render :show, status: :created, location: @branch }
-      else
-        format.html { render :new }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
+    if @store.id.present?
+      @branch.store_id = @store.id 
+    else
+      redirect_to root_url, :notice => 'no store id' + @store.id.to_s
     end
+    
+    if @branch.save!      
+      if @store.update_attribute(:has_branch, true)
+        @store.current_branch_id = @branch.id.to_s;
+        @store.save
+        uri = '/store/branch/' + @branch.id.to_s + '/edit_delivery_areas'
+        #uri = 'store/branch/' + @branch.id.to_s + '/edit_delivery_areas';        
+        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return              
+      else
+        redirect_to root_url, :notice => 'Unable to update store'+ @branch.sub_name and return              
+      end  
+    else              
+        redirect_to root_url, :notice => 'Unable to save branch'+ @branch.sub_name and return              
+    end    
   end
 
   def destroy	
-	
+	  
   end
+
+  def update_delivery_areas
+    
+
+  end  
+  #GET
+  def edit_delivery_areas
+    
+  end  
 
   def set_days
     @days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
@@ -90,8 +106,23 @@ class BranchController < ApplicationController
     @store = @user.store  
     if @store
       @store_branches = @store.branches
-      @branch = @store.branch
     end    
+  end  
+
+  def set_branch
+    if !@store.has_branch?
+      @branch = Store::Branch.new
+      @branch_name = 'main'
+      @branch_contact_no = @store.contact_no
+      @branch.sub_name = 'Main'
+      if params[:business_hours_from_monday].present?
+        @branch = Store::Branch.new(branch_params)           
+      end
+    end    
+    if !@branch.present?
+      @branch = Store::Branch.where(:id => @store.current_branch_id.to_s).first      
+    end
+      
   end  
 
 

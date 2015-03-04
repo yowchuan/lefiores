@@ -1,5 +1,7 @@
 -#= form_for(@branch, :html=> {:multipart => true}) do |f|
-= form_for(@branch,:html=> {:multipart => true, :class => 'uk-form'},  :url => {:controller => 'branch'}) do |f|
+-#= form_for(@branch,:html=> {:multipart => true, :class => 'uk-form'},:url => {:controller => 'branch',:action=>"create"}) do |f|
+
+= form_for(@branch, :html=> {:multipart => true},:url => {:controller => 'branch',:action=>"create"}) do |f|
   - if @branch.errors.any?
     #error_explanation
     = pluralize(@branch.errors.count, "error")
@@ -18,6 +20,7 @@
     \-
     -if @branch_name.present? 
       = @branch_name
+      = f.hidden_field :sub_name, :value => @branch_name
     -else
       = f.text_field :sub_name, :placeholder => '<melaka>'        
 

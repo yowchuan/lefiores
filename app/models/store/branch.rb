@@ -2,7 +2,8 @@ class Store::Branch
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  belongs_to :store, :class_name => 'Store'  
+  belongs_to :store, :class_name => 'Store' 
+   
   
   #field :views, :type => Integer, :default => 0
   field :contact_no, :type => String, :default => ''

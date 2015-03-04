@@ -22,12 +22,18 @@ Rails.application.routes.draw do
 
 
   ######### for branch setup
-  get 'store/branch/:branch_id/edit' => 'branch#delivery_areas'
+  get 'store/branch/:id/edit_delivery_areas' => 'branch#edit_delivery_areas'
   patch 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
+  post 'branch/create' => 'branch#create' #submit [post]  
+  #get 'branch/:id/edit' => 'branch#edit'
+  #post 'branch/:site_id/update' => 'sites#update'
+  #patch 'sites/:site_id/update' => 'sites#update'
+
 
   ######### for branch/dashboard
   get 'store/dashboard' => 'branch#index' #view
   get 'store/branch/new' => 'branch#new' #view
+
   get 'store/settings' => 'branch#settings' #view
   
   #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
