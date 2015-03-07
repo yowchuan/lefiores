@@ -39,6 +39,10 @@ Rails.application.routes.draw do
   #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
   
   root 'welcome#index'
+
+  namespace :admin do
+    root 'welcome#index'
+  end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
