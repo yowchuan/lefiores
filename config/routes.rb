@@ -42,6 +42,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'welcome#index'
+
+    ######## users
+    get 'users' => 'users#index'
+    get 'users/:id' => 'users#show'
+    get 'users/:id/edit' => 'users#edit'
+    
   end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,25 @@
+%h1
+  User List
+
+%div.uk-overflow-container
+  %table.uk-table.uk-table-hover.uk-table-striped.uk-table-condensed
+    %thead
+      %tr
+        %td
+          = t(:role)        
+        %td
+          = t(:email)
+        %td
+          = t(:user_created_at)
+        %td
+          = t(:user_detail)
+    - @users.each do |user|
+      %tr
+        %td
+          = user.role        
+        %td
+          = user.email
+        %td
+          = user.created_at
+        %td
+          = link_to t(:user_detail), '/admin/users/' + user.id

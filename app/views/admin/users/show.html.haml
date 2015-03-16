@@ -1,0 +1,38 @@
+
+%h2
+  =t(:user_detail)
+
+= link_to t(:return_user_list), '/admin/users'
+
+%div.uk-overflow-container
+  %table.uk-table.uk-table-hover.uk-table-striped.uk-table-condensed
+    %tr
+      %td
+
+      %td
+        = link_to t(:edit_user), '/admin/users/' + @user.id + '/edit'
+        |
+        = link_to t(:change_password), '/admin/users/' + @user.id + '/password'
+    %tr
+      %td
+        = t(:user_id)
+      %td
+        = @user.id    
+    %tr
+      %td
+        = t(:email)
+      %td
+        = @user.email
+    %tr
+      %td
+        = t(:user_created_at)
+      %td
+        = @user.created_at
+    %tr
+      %td
+        = t(:role)
+      %td
+        = @user.role
+
+
+
