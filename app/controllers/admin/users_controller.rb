@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::BaseController
   # GET admin/users
   # GET admin/users.json
   def index
-    
+    authorize!
     if current_user.role == :admin
       @users = User.all
     end
