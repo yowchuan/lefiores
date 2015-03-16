@@ -27,27 +27,18 @@ class AdminAbility
 
   end
 
-  def staff
-    can [:read, :create ], Admin::Reservedword
-    can [:read, :create, :update, :destroy], Game
-    can :manage, News::Category
-    can :manage, Game::Company
-    can :manage, Game::Platform
-    can :manage, Game::Genre
-    can [:read, :create, :update, :destroy], Game
+  def user
+    #can [:read, :create ], Admin::Reservedword
+    #can [:read, :create, :update, :destroy], Game
+    #can :manage, News::Category
+    #can :manage, Game::Company
+    #can :manage, Game::Platform
+    #can :manage, Game::Genre
+    #can [:read, :create, :update, :destroy], Game
   end
 
-  def news_editor
-    can [:read ], Admin::Reservedword
-    can [:read,:update,:create], News, :user_id => @user_id
-    cannot :status, News
-    can :read, News::Category
-    can [:read, :create], Game 
-    can [:read, :create], Game::Company
-    can [:update], Game ,:user_id => @user_id
-    can [:update], Game::Company ,:user_id => @user_id
-    can :read, Game::Genre
-    can :read, Game::Platform
+  def florist
+    can :read, User
   end
 
   def news_manager
