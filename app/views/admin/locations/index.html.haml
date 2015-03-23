@@ -1,0 +1,9 @@
+this is locations page
+
+- if @locations.present?
+  - @locations.each do |location|
+    %tr
+      %td
+        = location.name                
+      %td
+        = link_to t(:user_detail), '/admin/users/' + location.id

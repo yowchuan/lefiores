@@ -1,6 +1,9 @@
-class Admin::WelcomeController < Admin::BaseController
-  load_and_authorize_resource :class => false
-
+class Admin::WelcomeController < Admin::BaseController  
   def index
+  	if current_user.role == :admin
+  		flash[:notice] = 'hello sir!'
+  	else
+  		redirect_to root_url
+  	end
   end
 end

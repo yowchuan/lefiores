@@ -5,7 +5,7 @@ class AdminAbility
     user ||= User.new # guest user (not logged in)
     @user_role = user.role.to_s.classify.underscore
     @user_id = user.id
-    send user.role.to_s.classify.underscore
+    send user.role.to_s.classify.underscore   
    
   end
 
@@ -38,7 +38,7 @@ class AdminAbility
   end
 
   def florist
-    can :read, User
+    #can :read, User
   end
 
   def news_manager

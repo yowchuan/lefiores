@@ -13,13 +13,14 @@
           = t(:user_created_at)
         %td
           = t(:user_detail)
-    - @users.each do |user|
-      %tr
-        %td
-          = user.role        
-        %td
-          = user.email
-        %td
-          = user.created_at
-        %td
-          = link_to t(:user_detail), '/admin/users/' + user.id
+    - if @users.present?
+      - @users.each do |user|
+        %tr
+          %td
+            = user.role        
+          %td
+            = user.email
+          %td
+            = user.created_at
+          %td
+            = link_to t(:user_detail), '/admin/users/' + user.id

@@ -24,9 +24,8 @@ class Admin::BaseController < ApplicationController
   def verify_staff_or_admin
     if current_user.role == :admin  
       # no prob, because you are admin.
-      #return
-      #redirect_to root_url, :alert => 'welcome ' + current_user.role.to_s + ' ' + current_user.email.to_s
       return
+      redirect_to root_url, :alert => 'welcome ' + current_user.role.to_s + ' ' + current_user.email.to_s      
     else
       # cheking there is admin.
       @admin_user = User.where(:role => :admin).first

@@ -1,9 +1,10 @@
 class Admin::UsersController < Admin::BaseController  
+  load_and_authorize_resource 
 
   # GET admin/users
   # GET admin/users.json
   def index
-    authorize!
+    
     if current_user.role == :admin
       @users = User.all
     end
