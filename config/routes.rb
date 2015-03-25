@@ -52,8 +52,14 @@ Rails.application.routes.draw do
     get 'locations' => 'locations#index'
     get 'cities' => 'cities#index'
     get 'cities/new' => 'cities#new'
-    patch 'cites/:id/update' => 'cities#update'
+    patch 'cities/:id/update' => 'cities#update'
     post 'cities/new' => 'cities#create'    
+
+    #admin/state
+    get 'states' => 'states#index'
+    get 'states/new' => 'states#new'
+    patch 'states/:id/update' => 'states#update'
+    post 'states/new' => 'states#create'  
   end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

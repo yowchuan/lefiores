@@ -1,0 +1,33 @@
+%h1 
+  = t(:manage_states)
+
+= link_to('add state', '/admin/states/new', :class => 'uk-button uk-button-primary') if can? :create, Location::State
+
+- if @states.present?  
+  %table
+    %tr
+      %th State Name 
+        
+      %th Status
+      %th
+      %th
+      
+    
+    - @states.each do |state|
+      %tr
+        %td= state.name
+        %td= state.status      
+        %td= link_to 'Show', '/admin/state/' + state.id 
+
+        %td
+          -if can? :update, Location::State
+            = link_to('Edit', '/admin/states/' + state.id + '/edit') 
+        %td
+          -if can? :destroy, Location::State
+            = link_to 'Destroy', '/admin/states/' + state.id , :method => :delete, :data => { :confirm => 'Are you sure?' }
+- else
+  %br
+  No State Added            
+%br
+
+= link_to('add state', '/admin/states/new', :class => 'uk-button uk-button-primary') if can? :create, Location::State
