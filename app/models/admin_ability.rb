@@ -13,11 +13,12 @@ class AdminAbility
     #can :manage, :all
     #can [:read, :create, :destroy], Admin::Reservedword
     #can [:read, :create, :update, :destroy], Game
-
-    #can :manage, Topic::Page
-    #can :manage, News
-    #can :manage, Game::Company
+    
+    can :manage, Location
+    can :manage, Location::City
+    can :manage, Location::State
     can :manage, User
+
     #can :manage, News::Category
     #can :manage, Sitepage
     can :manage, Store

@@ -2,7 +2,8 @@ class Location
   include Mongoid::Document
   include Mongoid::Timestamps
   field :name, type: String
-  field :status, type: String    
+  field :zipcode, type: String
+  field :status, type: String , default: 'active'      
   
 
   has_many :keywords, :class_name => 'Location::Keyword'

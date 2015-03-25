@@ -50,6 +50,10 @@ Rails.application.routes.draw do
     patch 'users/:id/update' => 'users#update'
 
     get 'locations' => 'locations#index'
+    get 'cities' => 'cities#index'
+    get 'cities/new' => 'cities#new'
+    patch 'cites/:id/update' => 'cities#update'
+    post 'cities/new' => 'cities#create'    
   end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
