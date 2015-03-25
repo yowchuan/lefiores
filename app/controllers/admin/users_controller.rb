@@ -28,17 +28,14 @@ class Admin::UsersController < Admin::BaseController
   end
 
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    #@user = User.find(params[:id])
+    if @user.update(user_params)
+      #respond_with(@news)
+      uri = '/admin/users/' + @user.id
+      redirect_to uri, notice: 'User was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -60,7 +57,7 @@ class Admin::UsersController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :type)
+      params.require(:user).permit(:email, :password, :password_confirmation, :role)
     end
 
 end

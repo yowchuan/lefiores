@@ -50,6 +50,9 @@ Rails.application.routes.draw do
     patch 'users/:id/update' => 'users#update'
 
     get 'locations' => 'locations#index'
+    get 'locations/new' => 'locations#new'
+
+
     get 'cities' => 'cities#index'
     get 'cities/new' => 'cities#new'
     patch 'cities/:id/update' => 'cities#update'

@@ -7,4 +7,11 @@ class Admin::LocationsController < Admin::BaseController
   		redirect_to root_url
   	end
   end
+
+  # GET /admin/state/new
+  def new
+    authorize! :create, Location
+
+    @location = Location.new
+  end
 end
