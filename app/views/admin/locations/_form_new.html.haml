@@ -1,0 +1,31 @@
+= form_for(@location,:html=> {:multipart => true, :class => 'uk-form'},  :url => {:controller => 'admin/locations', :action => 'create'}) do |f|
+  - if @location.errors.any?
+    #error_explanation      
+      %ul
+        - @location.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label 'zipcode'
+    = f.text_field :zipcode , :class => 'uk-width-1-1'
+    (Malaysia zipcode ex: 17000 )
+  .field
+    = f.label :keywords
+    = f.text_field :keywords, :class => 'uk-width-1-1'
+    (keywords comma separeted ex: solaris, solaris mont kiara, dutamas )     
+  .field
+    = f.label :state
+    = select_tag 'location[location_state]', options_from_collection_for_select(Location::State.all, "id", "name")
+  .field
+    = f.label :city
+    = select_tag 'location[location_city]', options_from_collection_for_select(Location::City.all, "id", "name")  
+  
+
+
+  -#
+    .field
+      %label
+        =t(:company_logo)
+      = f.file_field :pic, :class => 'uk-width-1-1'
+  .actions
+    = f.submit 'submit'

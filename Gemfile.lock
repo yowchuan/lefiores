@@ -53,6 +53,7 @@ GEM
     bson (2.3.0)
     bson_ext (1.5.1)
     builder (3.2.2)
+    cancancan (1.9.2)
     capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
       i18n
@@ -219,6 +220,7 @@ PLATFORMS
 
 DEPENDENCIES
   bson_ext
+  cancancan (~> 1.9)
   capistrano-rails
   capistrano-rbenv (~> 2.0)
   coffee-rails (~> 4.1.0)

@@ -1,0 +1,33 @@
+
+%h2
+  =t(:edit_user)
+
+
+= link_to t(:return_user_list), '/admin/users'
+= link_to t(:return_user_detail), '/admin/users/' + @user.id
+
+
+
+= form_for(@user, :url => {:namespace => 'admin', :controller=>'users', :action => 'update', :id => @user.id}) do |f|
+
+  - if @user.errors.any?
+    #error_explanation
+      = pluralize(@user.errors.count, "error")
+      prohibited this user from being saved:
+  %ul
+  - @user.errors.full_messages.each do |message|
+    %li= message  
+  .field
+    = f.label :email
+    %br/
+    = f.text_field :email
+  .field
+    = f.label :role
+    %br/
+    = f.select :role, { 'florist'=> :florist, 'user' => :user, 'admin'=> :admin, 'spam checker' => :spam_checker }
+  .actions
+    = f.submit
+
+
+= link_to t(:return_user_list), '/admin/users'
+= link_to t(:return_user_detail), '/admin/users/' + @user.id

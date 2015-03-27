@@ -1,0 +1,23 @@
+%h1 New City
+
+= form_for( @city , :url => {:action => 'new' })do |f|
+  - if @city.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@admin_genre.errors.count, "error")} prohibited this admin_genre from being saved:"
+      %ul
+        - @city.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    %label
+      City
+
+    = f.text_field :name
+  -#  
+    .field
+      = f.label :slug
+      = f.text_field :slug
+  .actions
+    = f.submit 'Save'
+
+= link_to 'Back', '/admin/cities'
