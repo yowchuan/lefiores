@@ -41,10 +41,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-gem 'unicorn'
+#gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'tzinfo-data'
+gem 'tzinfo'
+gem 'coffee-script-source', '1.8.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -59,7 +62,7 @@ end
 
 #for databae using mongodb
 
-gem "mongoid", github: 'mongoid/mongoid'
+gem "mongoid"
 
 gem 'bson_ext'
 #gem 'devise'
