@@ -16,7 +16,7 @@ gem 'haml-rails'
 gem 'uikit-sass-rails'
 #for meta-tags
 gem 'meta-tags', :require => 'meta_tags'
-
+gem 'cancancan', '~> 1.9'
 
 
 

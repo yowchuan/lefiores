@@ -39,11 +39,38 @@ Rails.application.routes.draw do
   #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
   
   root 'welcome#index'
+
+  namespace :admin do
+    root 'welcome#index'
+
+    ######## users
+    get 'users' => 'users#index'
+    get 'users/:id' => 'users#show'
+    get 'users/:id/edit' => 'users#edit'
+    patch 'users/:id/update' => 'users#update'
+
+    #location
+    get 'locations' => 'locations#index'
+    get 'locations/new' => 'locations#new'
+    post 'locations/create' => 'locations#create'    
+
+
+    get 'cities' => 'cities#index'
+    get 'cities/new' => 'cities#new'
+    patch 'cities/:id/update' => 'cities#update'
+    post 'cities/new' => 'cities#create'    
+
+    #admin/state
+    get 'states' => 'states#index'
+    get 'states/new' => 'states#new'
+    patch 'states/:id/update' => 'states#update'
+    post 'states/new' => 'states#create'  
+  end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  # root 'welcome#index
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

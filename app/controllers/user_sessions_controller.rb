@@ -15,14 +15,18 @@ class UserSessionsController < ApplicationController
     #if user
     if session[:user_id].present?
       #if store isn't setup yet
-      if !user.has_store
+      if current_user.role == :admin
+        redirect_to '/admin', :notice => 'hello sir!'
+      else
+        if !user.has_store
         uri = '/store/new'        
         msg = 'welcome to lefiores!'
-      else        
-        uri = '/store/dashboard'          
-        msg = 'welcome back!'
-      end
-      redirect_back_or_to uri, :notice => msg
+        else        
+          uri = '/store/dashboard'          
+          msg = 'welcome back!'
+        end
+        redirect_back_or_to uri, :notice => msg
+      end        
     else
       flash.now.alert = 'login failed.'
       render :new

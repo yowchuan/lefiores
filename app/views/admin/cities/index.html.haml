@@ -1,0 +1,33 @@
+%h1 
+  = t(:manage_cities)
+
+= link_to('add city', '/admin/cities/new', :class => 'uk-button uk-button-primary') if can? :create, Location::City
+
+- if @cities.present?  
+  %table
+    %tr
+      %th City Name 
+        
+      %th Status
+      %th
+      %th
+      
+    
+    - @cities.each do |city|
+      %tr
+        %td= city.name
+        %td= city.status      
+        %td= link_to 'Show', '/admin/cities/' + city.id 
+
+        %td
+          -if can? :update, Location::City
+            = link_to('Edit', '/admin/cities/' + city.id + '/edit') 
+        %td
+          -if can? :destroy, Location::City
+            = link_to 'Destroy', '/admin/cities/' + city.id , :method => :delete, :data => { :confirm => 'Are you sure?' }
+- else
+  %br
+  No City Added            
+%br
+
+= link_to('add city', '/admin/cities/new', :class => 'uk-button uk-button-primary') if can? :create, Location::City

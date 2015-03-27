@@ -1,0 +1,25 @@
+!!!
+-#/[if lt IE 8] <html class="no-js ie7 oldie" lang="en">
+-#/[if IE 8] <html class="no-js ie8 oldie" lang="en">
+-#/[if IE 9] <html class="no-js ie9 oldie" lang="en">
+-#<!--[if gt IE 9]><!-->
+-#%html{:class => 'no-js', :lang => 'ja'}<>
+-#  <!--<![endif]-->
+%html{:lang => 'en'}
+%head
+  %title
+    Lefiores
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true  
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags  
+
+%body
+  
+  = render 'layouts/admin_navbar'
+  %div.uk-container.uk-container-center
+    %h1
+      Admin Panel
+    .uk-margin-top
+      = render 'layouts/notice'
+    = yield
+
