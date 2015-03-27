@@ -49,8 +49,10 @@ Rails.application.routes.draw do
     get 'users/:id/edit' => 'users#edit'
     patch 'users/:id/update' => 'users#update'
 
+    #location
     get 'locations' => 'locations#index'
     get 'locations/new' => 'locations#new'
+    post 'locations/create' => 'locations#create'    
 
 
     get 'cities' => 'cities#index'

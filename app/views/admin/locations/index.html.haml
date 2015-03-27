@@ -1,9 +1,17 @@
-this is locations page
+%h2  Manage Locations
 
-- if @locations.present?
-  - @locations.each do |location|
-    %tr
-      %td
-        = location.name                
-      %td
-        = link_to t(:user_detail), '/admin/users/' + location.id
+= link_to 'create new location', '/admin/locations/new', :class => 'uk-button uk-button-primary uk-button-medium uk-button-primary'
+
+
+%p
+  - if @locations.present?
+    %table
+      - @locations.each do |location|
+        %tr
+          %td
+            = location.zipcode                
+          %td
+            = location.state.name
+          %td
+            = location.city.name  
+          
