@@ -40,6 +40,9 @@ class Admin::LocationsController < Admin::BaseController
       end
     end
 
+
+    @location.name = @location.zipcode + ' ' + @state.name + ' ' + @city.name 
+
     if @location.save
       uri = '/admin/locations/';
 

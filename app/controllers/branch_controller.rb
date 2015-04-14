@@ -65,15 +65,15 @@ class BranchController < ApplicationController
     end
     
     if @branch.save!      
-      if @store.update_attribute(:has_branch, true)
-        @store.current_branch_id = @branch.id.to_s;
-        @store.save
-        uri = '/store/branch/' + @branch.id.to_s + '/edit_delivery_areas'
-        #uri = 'store/branch/' + @branch.id.to_s + '/edit_delivery_areas';        
-        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return              
-      else
-        redirect_to root_url, :notice => 'Unable to update store'+ @branch.sub_name and return              
-      end  
+      #if @store.update_attribute(:has_branch, true)
+        #@store.current_branch_id = @branch.id.to_s;
+        #@store.save
+      uri = '/store/branch/' + @branch.id.to_s + '/edit_delivery_areas'
+      #uri = 'store/branch/' + @branch.id.to_s + '/edit_delivery_areas';        
+      redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return              
+      #else
+      #  redirect_to root_url, :notice => 'Unable to update store'+ @branch.sub_name and return              
+      #end  
     else              
         redirect_to root_url, :notice => 'Unable to save branch'+ @branch.sub_name and return              
     end    
@@ -84,12 +84,29 @@ class BranchController < ApplicationController
   end
 
   def update_delivery_areas
+    set_branch
+
+    area_id = params[:branch][:delivery_area]
+    delivery_area = Location.where(:id => area_id).first
     
+    @branch.delivery_areas.push(delivery_area)    
+
+    if @branch.save!      
+      if @store.update_attribute(:has_branch, true)
+        @store.current_branch_id = @branch.id.to_s;
+        @store.save
+        uri = '/store/dashboard/'
+        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return              
+      else
+       redirect_to root_url, :notice => 'Unable to update store'+ @branch.sub_name and return              
+      end   
+
+    end  
 
   end  
   #GET
   def edit_delivery_areas
-    
+    set_branch
   end  
 
   def set_days

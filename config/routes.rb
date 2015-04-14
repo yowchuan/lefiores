@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'store/branch/:id/edit_delivery_areas' => 'branch#edit_delivery_areas'
   patch 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
   post 'branch/create' => 'branch#create' #submit [post]  
+  post 'branch/update_delivery_areas' => 'branch#update_delivery_areas' #submit [post]  
   #get 'branch/:id/edit' => 'branch#edit'
   #post 'branch/:site_id/update' => 'sites#update'
   #patch 'sites/:site_id/update' => 'sites#update'

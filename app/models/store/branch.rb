@@ -13,6 +13,11 @@ class Store::Branch
   field :store_id  , type: String
   #field :cut_off_time, type: DateTime, default: ->{ 10.minutes.ago }
   field :cut_off_time, type: String
+  
+
+  #has_many :delivery_areas, :class_name  => 'Location'
+  has_and_belongs_to_many :delivery_areas, :class_name => 'Location'
+  #has_many :location_state, 
 
   #business hours
   field :business_hours_from_monday, type: String

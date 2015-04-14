@@ -12,3 +12,24 @@
     %a.uk-icon-button{:href => "#", :style => 'width:100px; height:100px; font-size:50px; padding:30px;;background-color:#555; color:white'} 3  
     .uk-width-1-1
       Delivery Areas Setup
+
+= form_for(@branch, :html=> {:multipart => true, :class=>'uk-form'},:url => {:controller => 'branch',:action=>"update_delivery_areas", :class => 'uk-form'}) do |f|
+  - if @branch.errors.any?
+    #error_explanation
+    = pluralize(@branch.errors.count, "error")
+    prohibited this @branch from being saved:
+
+  %ul
+  - @branch.errors.full_messages.each do |message|
+    %li= message
+  
+  .field
+    = f.label 'Delivery Areas'
+    %br
+    .field    
+    = select_tag 'branch[delivery_area][]', options_from_collection_for_select(Location.all, "id", "name"), {'class' => 'uk-width-2-4'}
+  
+    %i You can add more delivery areas on your branch settings as well as set delivery fees
+  
+  .actions
+    = f.submit 'Add Delivery Area', {:class => 'uk-button'}

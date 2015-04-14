@@ -3,6 +3,7 @@ class Location
   include Mongoid::Timestamps
   #field :name, type: String
   field :zipcode, type: String
+  field :delivery_fee, type: String
   field :keywords, type: String
   field :name, type: String
   field :city, type:Object
