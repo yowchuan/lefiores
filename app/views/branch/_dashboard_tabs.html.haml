@@ -14,10 +14,11 @@
       = link_to 'Stats', '/store/orders'  
     -if @lefiores_tab_active == :settings    
       %li.uk-active
-        = link_to 'Settings', '/store/settings'  
+        %a
+          Settings
     -else
       %li
-        = link_to 'Settings', '/store/settings'  
+        = link_to 'Settings', '/store/' + @store.id+ '/settings'  
             
 
   

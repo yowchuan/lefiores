@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   delete "logout" => "user_sessions#destroy"
 
   
-  get 'register' => 'users#new'
+  get 'register' => 'users#new' 
   post 'register' => 'users#create'
 
   ######### for store  
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   ######### for branch/dashboard
   get 'store/dashboard' => 'branch#index' #view
   get 'store/branch/new' => 'branch#new' #view
+  get 'store/:branch_id/settings' => 'store#settings'
 
   get 'store/settings' => 'branch#settings' #view
   

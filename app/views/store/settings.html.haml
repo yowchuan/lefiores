@@ -1,0 +1,46 @@
+= render 'branch/dashboard_tabs'
+
+%h2.head-title
+  = @store.name + ' Store Details'
+%dl.uk-description-list-line
+  %dt
+    %strong 
+      Business Registration Number
+  %dd 
+    = @store.business_reg_no
+  %dt 
+    %strong
+      Contact Number
+  %dd 
+    = @store.contact_no
+  
+  %dt
+    %strong 
+      Page Url
+  %dd 
+    = link_to 'www.lefiores.com/' + @store.page_url , 'http://www.lefiores.com/' + @store.page_url 
+
+
+= link_to 'Edit Store Details', '/store/edit', {:class => 'uk-button uk-button-primary'}
+
+- if @store.branches.size == 1
+  %h2.head-title
+    Branch Detail
+  
+  %dl.uk-description-list-line
+    %dt
+      %strong 
+        Business Registration Number
+    %dd 
+      = @branch.present?
+    %dt 
+      %strong
+        Contact Number
+    %dd 
+      = @store.contact_no
+    
+    %dt
+      %strong 
+        Page Url
+    %dd 
+      = link_to 'www.lefiores.com/' + @store.page_url , 'http://www.lefiores.com/' + @store.page_url   

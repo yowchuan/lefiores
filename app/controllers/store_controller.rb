@@ -5,23 +5,23 @@ class StoreController < ApplicationController
   def new
     @user = User.where(:id => current_user.id).first    
     if @user.has_store
-  	  @store = Store.find(:id => @user.store.id);  	  	
+      @store = Store.find(:id => @user.store.id);       
     else
       @store = Store.new 
     end
   end
 
   def create
-  	@store = Store.new(site_params)
-  	@store.user_id = current_user.id.to_s
-  	@store.user_email = current_user.email 
+    @store = Store.new(site_params)
+    @store.user_id = current_user.id.to_s
+    @store.user_email = current_user.email 
 
-	  @user = User.where(:id => current_user.id.to_s).first
-	  if @user
-	  	@user.has_store = true		        
-	  	#@user.errors.full_messages 
-	  end
-	  
+    @user = User.where(:id => current_user.id.to_s).first
+    if @user
+      @user.has_store = true            
+      #@user.errors.full_messages 
+    end
+    
     if @store.save
       if @user.update_attribute(:has_store, true)
         #uri = '/' + @store.name + '/dashboard'
@@ -38,6 +38,13 @@ class StoreController < ApplicationController
     end
     
   end
+
+  # GET param branch_id
+  def settings
+    @branch = Store::Branch.where(:id => params[:branch_id]).first
+    @branch_id = params[:branch_id]
+    @lefiores_tab_active = :settings          
+  end
   
   def update
     respond_to do |format|
@@ -51,8 +58,8 @@ class StoreController < ApplicationController
     end
   end  
 
-  def destroy	
-	
+  def destroy 
+  
   end  
 
   def set_store
