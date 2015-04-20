@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   get 'store/dashboard' => 'branch#index' #view
   get 'store/branch/new' => 'branch#new' #view
   get 'store/:branch_id/settings' => 'store#settings'
+  post 'store/settings/:store_id/upload_photo' => 'store#image_create'
+  
 
   get 'store/settings' => 'branch#settings' #view
   

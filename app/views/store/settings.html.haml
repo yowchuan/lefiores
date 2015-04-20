@@ -2,6 +2,11 @@
 
 %h2.head-title
   = @store.name + ' Store Details'
+-if @store.store_logo_url.present?
+  = image_tag @store.store_logo_url
+-else
+  Select one of the photo's below to set as your store logo
+= render 'image_uploader'  
 %dl.uk-description-list-line
   %dt
     %strong 

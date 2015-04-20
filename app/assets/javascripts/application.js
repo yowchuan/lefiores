@@ -13,5 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require uikit
 //= require_tree .
+// for uikit
+
+//= require uikit.min
+// = require uikit/htmleditor.min
+// = require uikit/sortable.min
+// = require uikit/notify.min
+//=  require uikit/upload
+//=  require uikit/autocomplete
+

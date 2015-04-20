@@ -12,11 +12,13 @@ gem 'sass-rails', '~> 5.0'
 
 #for haml
 gem 'haml-rails'
-#for uikit
-gem 'uikit-sass-rails'
+
 #for meta-tags
 gem 'meta-tags', :require => 'meta_tags'
 gem 'cancancan', '~> 1.9'
+gem 'mini_magick'
+
+gem 'rmagick', :require => 'RMagick'
 
 
 
@@ -61,6 +63,9 @@ end
 #for databae using mongodb
 
 gem "mongoid", github: 'mongoid/mongoid'
+#image uploader 
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
 
 gem 'bson_ext'
 #gem 'devise'

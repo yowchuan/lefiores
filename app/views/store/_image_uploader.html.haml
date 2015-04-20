@@ -1,0 +1,130 @@
+
+%hr
+%h3
+  =t(:image_upload)
+- if @store.id.present? and @store.created_at.present?
+  %div.uk-vertical-align.uk-text-center.uk-height-1-1
+    %div.uk-vertical-align-middle{'style'=>'width:250px;'}
+      %div#upload-drop.uk-placeholder.uk-text-center
+        %div.uk-panel.uk-panel-box
+          %i.uk-icon-cloud-upload.uk-icon-medium.uk-text-muted.uk-margin-small-right
+
+          -#Attach binaries by dropping them here or
+          Upload Photo
+
+          %a{:class=>'uk-form-file'}
+            -# selecting one.
+            =t(:select_photos_to_upload)
+          %input{:type=>'file',:id=>'upload-select', :style=>'display:none;'}
+
+        %div#progressbar.uk-progress.uk-hidden
+          %div.uk-progress-bar{:style=>'width: 0%;'}
+
+-if @store.store_images.present? and @store.store_images.count > 0
+  %h3 
+    =t(:images_for_this_news)
+
+  -# click on the buttons below the image (small | large) to copy the syntax which you can paste into the editor
+  = t(:click_on_the_buttons_below_the_image_to_copy_syntax)
+  -# you can also set the following as featured image
+  = t(:you_can_also_set_the_ff_as_featured_image)
+  
+  - @store.store_images.each do |image|
+    / This is a div as a thumbnail with a caption
+    .uk-thumbnail
+      = image_tag image.file.small.url        
+      .uk-thumbnail-caption
+        %a.uk-button-mini.uk-button-primary
+          set as store logo
+      -#%a.gw-image-prompt{'href'=>'#img_' + image.id, 'data-uk-modal'=>"{target:'#img_"+ image.id + "'}" }
+        
+  
+- else
+  %ul#image_list
+
+
+-#%a{'href'=>'/images/' + @site.id + '/' + @page.id }
+-#  画像の削除はこちらから行ってください。
+-#  -#  = link_to 'Destroy', '/images/' + @site.id + '/' + @page.id + '/' + image.id , method: :delete, data: { confirm: 'Are you sure?' }
+
+
+
+:javascript
+
+
+  $("a.uk-form-file").click(function () {
+    $('input#upload-select').click();
+    return false; // must!
+  });
+
+
+
+
+  //$('.gw-image-prompt').on('click', function() {
+  $(document).on('click','a.gw-image-prompt', function() {
+    window.prompt('#{t(:copy_the_following_code_and_paste_it_on_the_editor)}','![](' + $(this).attr('data-gw-image') + ')');
+    console.log('#{t(:copy_the_following_code_and_paste_it_on_the_editor)}');
+    return false;
+  });
+  $(function(){
+
+
+      var progressbar = $("#progressbar"),
+          bar         = progressbar.find('.uk-progress-bar'),
+          settings    = {
+
+          action: '/store/settings/#{@store.id}/upload_photo', // upload url
+          param: 'store_image[file]',
+          single: true,
+          params: {
+            'authenticity_token' : '#{form_authenticity_token}',
+            'store_image[store_id]' : '#{@store.id}',
+          },
+          type: 'json',
+
+          allow : '*.(jpg|gif|png|jpeg)', // allow only images
+
+          loadstart: function() {
+              bar.css("width", "0%").text("0%");
+              progressbar.removeClass("uk-hidden");
+          },
+
+          progress: function(percent) {
+              percent = Math.ceil(percent);
+              bar.css("width", percent+"%").text(percent+"%");
+          },
+
+          allcomplete: function(response) {
+
+              bar.css("width", "100%").text("100%");
+
+              setTimeout(function(){
+                  progressbar.addClass("uk-hidden");
+              }, 250);
+
+
+              //alert("Upload Completed");
+              //console.log(response);
+              //console.log(response.image_file_small_url);
+
+              var liClass = $(
+                  ''
+                  + '<li>'
+                  + '<img src="' + response.image_file_small_url + '" /><br />'
+                  + '<a data-no-turbolink="true" class="uk-badge gw-image-prompt" data-gw-image="' + response.image_file_small_url + '">'
+                  + '#{t(:small)}'
+                  + '</a>'
+                  + '  '
+                  + '<a class="uk-badge gw-image-prompt" data-gw-image="' + response.image_file_url + '">'
+                  + '#{t(:large)}'
+                  + '</a>'
+                  + '</li>'
+              );
+              $('ul#image_list').append(liClass);
+
+          }
+      };
+
+      var select = $.UIkit.uploadSelect($("#upload-select"), settings),
+          drop   = $.UIkit.uploadDrop($("#upload-drop"), settings);
+  });

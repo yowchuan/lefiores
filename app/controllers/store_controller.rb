@@ -39,6 +39,34 @@ class StoreController < ApplicationController
     
   end
 
+  #patch logo for the store
+  def set_logo
+    authorize! :update, Store
+    begin
+      @store_image = News::Image.where(:id => params[:image_id]).first
+      @store.store_logo_url = @store_image.file.s480x320.url
+      @store.store_logo_id = @store_image.id
+      if @store.update     
+        redirect_to 'store/dashboard',:notice => 'You have successfully set your logo' and return               
+      end
+    end
+    redirect_to '/admin/news/' + @news.id, :alert => t(:failed_to_set_top_image) and return
+  end
+
+  def image_create
+    authorize! :update, Store
+    store_image = Store::Image.new(store_image_params)
+
+    store_image.store_id = @store.id
+    store_image.user_id = current_user.id
+
+    if store_image.save()      
+      render :json => {:image_file_url => store_image.file.url, :id => store_image.id.to_s, :image_file_small_url => store_image.file.small.url}
+    else
+      render :text => 'upload error'
+    end
+  end
+
   # GET param branch_id
   def settings
     @branch = Store::Branch.where(:id => params[:branch_id]).first
@@ -61,6 +89,10 @@ class StoreController < ApplicationController
   def destroy 
   
   end  
+
+  def store_image_params    
+    params.require(:store_image).permit(:store_id, :user_id, :file )
+  end
 
   def set_store
     @user = User.where(:id => current_user.id).first    

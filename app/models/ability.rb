@@ -10,4 +10,9 @@ class Ability
     can :manage, :all
     can :read, User
   end
+
+  def florist
+    can :manage, Store
+    can :read, User
+  end
 end
