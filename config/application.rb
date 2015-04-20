@@ -21,7 +21,7 @@ module Lefiores
     config.assets.precompile += ["codemirror*", "codemirror/**/*"]
     config.assets.precompile += ['*.js', '*.css']
     config.assets.precompile += ['uikit*', 'uikit/**/*']    
-    config.assets.precompile += %w( *.svg *.eot *.woff *.ttf )
+    
     config.autoload_paths += %W(#{config.root}/lib) # add this line
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
