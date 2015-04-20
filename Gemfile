@@ -17,7 +17,6 @@ gem 'haml-rails'
 gem 'meta-tags', :require => 'meta_tags'
 gem 'cancancan', '~> 1.9'
 gem 'mini_magick'
-
 gem 'rmagick', :require => 'RMagick'
 
 
