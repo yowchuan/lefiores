@@ -23,6 +23,12 @@ module Lefiores
     config.assets.precompile += ['uikit*', 'uikit/**/*']    
     
     config.autoload_paths += %W(#{config.root}/lib) # add this line
+    # Adding Webfonts to the Asset Pipeline
+    config.assets.precompile << Proc.new { |path|
+      if path =~ /\.(eot|svg|ttf|woff)\z/
+        true
+      end
+    }
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
