@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   post 'store/create' => 'store#create' #submit [post]  
   patch 'store/update' => 'store#update'  
 
+  ######### for store  
+  get ':store_slug' => 'store#show_store' #view
+  post 'store/create' => 'store#create' #submit [post]  
+  patch 'store/update' => 'store#update'  
+
 
   ######### for branch setup
   get 'store/branch/:id/edit_delivery_areas' => 'branch#edit_delivery_areas'
@@ -36,6 +41,7 @@ Rails.application.routes.draw do
   get 'store/branch/new' => 'branch#new' #view
   get 'store/:branch_id/settings' => 'store#settings'
   post 'store/settings/:store_id/upload_photo' => 'store#image_create'
+  get 'store/:store_id/settings/set_logo/:image_id' => 'store#set_logo'
   
 
   get 'store/settings' => 'branch#settings' #view

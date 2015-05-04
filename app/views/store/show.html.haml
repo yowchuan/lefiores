@@ -1,0 +1,14 @@
+.uk-grid.uk-grid-divider
+  .uk-width-1-5
+    %img{:src => "#{@store.store_logo_url}"}
+  .uk-width-4-5
+    %h2 
+      = @store.name
+
+    %dl.uk-description-list-line      
+      %dt 
+        %strong
+          Contact Number
+      %dd 
+        = @store.contact_no
+%hr

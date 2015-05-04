@@ -43,14 +43,14 @@ class StoreController < ApplicationController
   def set_logo
     authorize! :update, Store
     begin
-      @store_image = News::Image.where(:id => params[:image_id]).first
-      @store.store_logo_url = @store_image.file.s480x320.url
+      @store_image = Store::Image.where(:id => params[:image_id]).first
+      @store.store_logo_url = @store_image.file.url
       @store.store_logo_id = @store_image.id
       if @store.update     
-        redirect_to 'store/dashboard',:notice => 'You have successfully set your logo' and return               
+        redirect_to '/store/'+@store.id+'/settings',:notice => 'You have successfully set your logo' and return               
       end
     end
-    redirect_to '/admin/news/' + @news.id, :alert => t(:failed_to_set_top_image) and return
+    redirect_to '/store/dashboard', :alert => t(:failed_to_set_top_image) and return
   end
 
   def image_create
@@ -97,12 +97,20 @@ class StoreController < ApplicationController
   def set_store
     @user = User.where(:id => current_user.id).first    
     @store = @user.store    
-  end  
+  end    
+
+  def show_store
+    slug = params[:store_slug]
+    @store = Store.where(:page_url => slug).first
+    render :show
+  end
 
   private
   def site_params
     params.require(:store).permit(:business_reg_no, :contact_no, :page_url,:name)
   end
+
+
 
  
 

@@ -22,30 +22,25 @@
 
 -if @store.store_images.present? and @store.store_images.count > 0
   %h3 
-    =t(:images_for_this_news)
+    Your Store Images
 
   -# click on the buttons below the image (small | large) to copy the syntax which you can paste into the editor
-  = t(:click_on_the_buttons_below_the_image_to_copy_syntax)
-  -# you can also set the following as featured image
-  = t(:you_can_also_set_the_ff_as_featured_image)
-  
+  You can choose from the images below to use as your store logo
+  -# you can also set the following as featured image  
+  %hr
   - @store.store_images.each do |image|
     / This is a div as a thumbnail with a caption
     .uk-thumbnail
       = image_tag image.file.small.url        
       .uk-thumbnail-caption
-        %a.uk-button-mini.uk-button-primary
-          set as store logo
-      -#%a.gw-image-prompt{'href'=>'#img_' + image.id, 'data-uk-modal'=>"{target:'#img_"+ image.id + "'}" }
+        = link_to 'Set as Logo', '/store/' + @store.id + '/settings/set_logo/'+image.id.to_s, :class => "uk-button-mini uk-button-primary"
+        
+  %hr    
         
   
 - else
   %ul#image_list
 
-
--#%a{'href'=>'/images/' + @site.id + '/' + @page.id }
--#  画像の削除はこちらから行ってください。
--#  -#  = link_to 'Destroy', '/images/' + @site.id + '/' + @page.id + '/' + image.id , method: :delete, data: { confirm: 'Are you sure?' }
 
 
 
