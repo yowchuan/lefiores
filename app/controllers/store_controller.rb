@@ -1,6 +1,6 @@
 class StoreController < ApplicationController
-  before_filter :require_login  
-  before_action :set_store
+  before_filter :require_login, :except => :show_store
+  before_action :set_store, :except => :show_store
 
   def new
     @user = User.where(:id => current_user.id).first    
