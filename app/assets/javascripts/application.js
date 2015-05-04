@@ -11,15 +11,15 @@
 // about supported directives.
 //
 //= require jquery
+// $(document).ready(function() {対策
+//= require jquery.turbolinks
+
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
-// for uikit
 
+
+// for uikit
 //= require uikit.min
-// = require uikit/htmleditor.min
-// = require uikit/sortable.min
-// = require uikit/notify.min
 //=  require uikit/upload
 //=  require uikit/autocomplete
 

@@ -5,6 +5,8 @@ gem 'capistrano-rbenv', '~> 2.0', require: false
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
+gem 'jquery-turbolinks'
+gem 'jquery-rails'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -12,7 +14,7 @@ gem 'sass-rails', '~> 5.0'
 gem "uikit-sass-rails"
 
 #for haml
-gem 'haml-rails'
+gem 'haml-rails'	
 
 #for meta-tags
 gem 'meta-tags', :require => 'meta_tags'
