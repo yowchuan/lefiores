@@ -23,7 +23,7 @@
     %strong 
       Page Url
   %dd 
-    = link_to 'www.lefiores.com/' + @store.page_url , 'http://www.lefiores.com/' + @store.page_url 
+    = link_to @site_domain + '/' + @store.page_url ,'http://' + @site_domain + '/' + @store.page_url
 
 
 = link_to 'Edit Store Details', '/store/edit', {:class => 'uk-button uk-button-primary'}
