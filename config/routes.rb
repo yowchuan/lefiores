@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
     ######## users
     get 'users' => 'users#index'
+    get 'dashboard' => 'welcome#index'
     get 'users/:id' => 'users#show'
     get 'users/:id/edit' => 'users#edit'
     patch 'users/:id/update' => 'users#update'

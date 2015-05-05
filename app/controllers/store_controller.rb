@@ -100,11 +100,15 @@ class StoreController < ApplicationController
   end    
 
   def show_store
-    slug = params[:store_slug]
-    @store = Store.where(:page_url => slug).first
-    @branch = Store::Branch.where(:id => @store.current_branch_id).first
+    if current_user.role != :admin
+      slug = params[:store_slug]
+      @store = Store.where(:page_url => slug).first
+      @branch = Store::Branch.where(:id => @store.current_branch_id).first
 
-    render :show
+      render :show
+    else
+      redirect_to '/admin/dashboard'
+    end
   end
 
   private
