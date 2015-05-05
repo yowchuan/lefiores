@@ -35,8 +35,8 @@
           .uk-button-dropdown{"data-uk-dropdown" => ""}
             .uk-button-group
               %button.uk-button.uk-button-success
-
-                = @branch.sub_name
+                -if @branch.present?
+                  = @branch.sub_name
               %div.data-uk-dropdown
                 %a.uk-button.uk-button-success
                   %i.uk-icon-caret-down                              

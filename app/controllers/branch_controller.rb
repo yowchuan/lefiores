@@ -109,6 +109,25 @@ class BranchController < ApplicationController
     set_branch
   end  
 
+  def edit
+    @branch = Store::Branch.where(:id => params[:branch_id]).first
+
+  end
+
+  def update
+    set_branch
+    @branch.sub_name = 'main'
+    respond_to do |format|
+      if @branch.update(branch_params)
+        format.html { redirect_to '/store/settings', notice: 'Branch was successfully updated.' }
+        format.json { render :show, status: :ok, location: @branch }
+      else
+        format.html { render :edit }
+        format.json { render json: @branch.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def set_days
     @days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
   end
@@ -146,7 +165,7 @@ class BranchController < ApplicationController
   private
   def branch_params    
     
-    params.require(:store_branch).permit(:contact_no, :sub_name,
+    params.require(:store_branch).permit(:contact_no, :sub_name, :cut_off_time,
                 :business_hours_from_monday,
                 :business_hours_from_tuesday,
                 :business_hours_from_wednesday,

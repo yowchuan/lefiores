@@ -69,7 +69,7 @@ class StoreController < ApplicationController
 
   # GET param branch_id
   def settings
-    @branch = Store::Branch.where(:id => params[:branch_id]).first
+    @branch = Store::Branch.where(:id => @store.current_branch_id).first
     @branch_id = params[:branch_id]
     @lefiores_tab_active = :settings          
   end
@@ -102,10 +102,77 @@ class StoreController < ApplicationController
   def show_store
     slug = params[:store_slug]
     @store = Store.where(:page_url => slug).first
+    @branch = Store::Branch.where(:id => @store.current_branch_id).first
+
     render :show
   end
 
   private
+  def stringify_business_hours branch
+    empty = false;
+    if branch.business_hours_from_monday
+      business_hours = branch.business_hours_from_monday
+      empty =true
+    end  
+    if branch.business_hours_from_tuesday
+      business_hours = business_hours + '\n' + branch.business_hours_from_tuesday
+      empty =true
+    end
+
+    if branch.business_hours_from_wednesday
+      business_hours = business_hours + '\n' + branch.business_hours_from_wednesday
+      empty =true
+    end  
+
+    if branch.business_hours_from_thursday
+      business_hours = business_hours + '\n' + branch.business_hours_from_thursday
+      empty =true
+    end  
+
+    if branch.business_hours_from_friday
+      business_hours = business_hours + '\n' + branch.business_hours_from_friday
+      empty =true
+    end  
+
+    if branch.business_hours_from_saturday
+      business_hours = business_hours + '\n' + branch.business_hours_from_tuesday
+      empty =true
+    end  
+
+    if branch.business_hours_from_sunday
+      empty =true
+    end    
+
+    #to
+
+    if branch.business_hours_to_monday
+      empty =true
+    end  
+    if branch.business_hours_to_tuesday
+      empty =true
+    end
+
+    if branch.business_hours_to_wednesday
+      empty =true
+    end  
+
+    if branch.business_hours_to_thursday
+      empty =true
+    end  
+
+    if branch.business_hours_to_friday
+      empty =true
+    end  
+
+    if branch.business_hours_to_saturday
+      empty =true
+    end  
+
+    if branch.business_hours_to_sunday
+      empty =true
+    end 
+  end  
+
   def site_params
     params.require(:store).permit(:business_reg_no, :contact_no, :page_url,:name)
   end

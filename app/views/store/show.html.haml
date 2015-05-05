@@ -1,6 +1,7 @@
 .uk-grid.uk-grid-divider
   .uk-width-1-5
-    %img{:src => "#{@store.store_logo_url}"}
+    -if @store.present?
+      %img{:src => "#{@store.store_logo_url}"}
   .uk-width-4-5
     %h2 
       = @store.name
@@ -11,4 +12,32 @@
           Contact Number
       %dd 
         = @store.contact_no
+      %dt 
+        %strong
+          Business Hours
+      %dd         
+        =@branch.business_hours_from_monday
+        =@branch.business_hours_from_tuesday
+        =@branch.business_hours_from_wednesday
+        =@branch.business_hours_from_thursday
+        =@branch.business_hours_from_friday
+        =@branch.business_hours_from_saturday
+        =@branch.business_hours_from_sunday
+        =@branch.business_hours_to_monday
+        =@branch.business_hours_to_tuesday
+        =@branch.business_hours_to_wednesday
+        =@branch.business_hours_to_thursday
+        =@branch.business_hours_to_friday
+        =@branch.business_hours_to_saturday
+        =@branch.business_hours_to_sunday
+      %dt 
+        %strong
+          =@branch.sub_name
+          Branch
+      %dd 
+        =@branch.delivery_areas
+        - @branch.delivery_areas.each do |area|
+          aldfkjaldkf
+          = area
+        
 %hr

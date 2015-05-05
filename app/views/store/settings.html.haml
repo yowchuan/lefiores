@@ -28,24 +28,55 @@
 
 = link_to 'Edit Store Details', '/store/edit', {:class => 'uk-button uk-button-primary'}
 
+%hr
+
 - if @store.branches.size == 1
   %h2.head-title
+    = @branch.sub_name
     Branch Detail
   
   %dl.uk-description-list-line
     %dt
       %strong 
-        Business Registration Number
+        Cut Off time
     %dd 
-      = @branch.present?
+      = @branch.cut_off_time
+      - if !@branch.cut_off_time?
+        %em
+          you haven't set your branch's cut off time
+    %dt
+      %strong 
+        Business Hours
+    %dd 
+      = @branch.cut_off_time
+      - if !@branch.cut_off_time?
+        %em
+          you haven't set your branch's cut off time
+    %dt
+      %strong 
+        Delivery Areas
+    %dd 
+      - @branch.delivery_areas.each do |area|
+        area.name
+      - if @branch.delivery_areas.size < 1
+        %em
+          you haven't set your branch's delivery area. your customer's might not be aware of your delivery area
     %dt 
       %strong
         Contact Number
     %dd 
-      = @store.contact_no
-    
-    %dt
-      %strong 
-        Page Url
+      = @branch.contact_no
+      -if !@branch.contact_no?
+        %em
+          Branch's contact number is not set
+
+    %dt 
+      %strong
+        Postal Code
     %dd 
-      = link_to 'www.lefiores.com/' + @store.page_url , 'http://www.lefiores.com/' + @store.page_url   
+      = @branch.postal_code
+      -if !@branch.postal_code?
+        %em
+          Branch's postal code is not set
+= link_to 'Edit ' + @branch.sub_name + ' Branch Details', '/store/' + @branch.id + '/edit', {:class => 'uk-button uk-button-primary'}    
+.uk-margin-bottom

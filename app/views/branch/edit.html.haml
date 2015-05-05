@@ -1,0 +1,34 @@
+= form_for(@branch, :html=> {:multipart => true, :class=>'uk-form'},:url => {:controller => 'branch',:action=>"update", :class => 'uk-form'}) do |f|
+  - if @branch.errors.any?
+    #error_explanation
+    = pluralize(@branch.errors.count, "error")
+    prohibited this @branch from being saved:
+
+  %ul
+  - @branch.errors.full_messages.each do |message|
+    %li= message
+
+  %dl.uk-description-list-line      
+    .field
+    = f.label 'Branch Name:'
+    %br                       
+    -if @store.name.present?
+      %strong
+        = @store.name
+    \-
+    -if @branch_name.present? 
+      = @branch_name
+      = f.hidden_field :sub_name, :value => @branch_name
+    -else
+      = f.text_field :sub_name, :placeholder => '<melaka>'        
+    %dt 
+      %strong
+        Cut Off Time
+    %dd 
+      = f.time_field :cut_off_time              
+    %dt 
+      %strong
+        Business Hours
+  
+  .actions
+    = f.submit 'Save', {:class => 'uk-button'}

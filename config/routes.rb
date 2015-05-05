@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   patch 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
   post 'branch/create' => 'branch#create' #submit [post]  
   post 'branch/update_delivery_areas' => 'branch#update_delivery_areas' #submit [post]  
+  post 'branch/update' => 'branch#update' #submit [post]  
   #get 'branch/:id/edit' => 'branch#edit'
   #post 'branch/:site_id/update' => 'sites#update'
   #patch 'sites/:site_id/update' => 'sites#update'
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
   get 'store/dashboard' => 'branch#index' #view
   get 'store/branch/new' => 'branch#new' #view
   get 'store/:branch_id/settings' => 'store#settings'
+  get 'store/:branch_id/edit' => 'branch#edit'
   post 'store/settings/:store_id/upload_photo' => 'store#image_create'
   get 'store/:store_id/settings/set_logo/:image_id' => 'store#set_logo'
   
