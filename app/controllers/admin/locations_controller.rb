@@ -23,13 +23,15 @@ class Admin::LocationsController < Admin::BaseController
     city_id = params[:location][:location_city]
     state_id = params[:location][:location_state]
 
-    
+    @location.name = @location.zipcode
     #setup city
     if city_id.present?      
       @city = Location::City.where(:id => city_id).first
       if @city.present?
         @location.city_id = @city.id.to_s        
+        @location.name = @location.name + ' ' + @city.name
       end
+
     end
 
     #setup state
@@ -37,18 +39,19 @@ class Admin::LocationsController < Admin::BaseController
       @state = Location::State.where(:id => state_id).first
       if @state.present?
         @location.state_id = @state.id.to_s
+        @location.name = @location.name + ', ' + @state.name
       end
     end
 
 
-    @location.name = @location.zipcode + ' ' + @state.name + ' ' + @city.name 
+    #@location.name = @location.zipcode + ' ' + @state.name + ' ' + @city.name 
 
     if @location.save
       uri = '/admin/locations/';
 
-      redirect_to uri, notice: 'location added: ' + @city.name and return
+      redirect_to uri, notice: 'location added: ' + @location.name and return
     else
-      #@news_list = get_news
+      @news_list = get_news
       render :new
     end
   end
