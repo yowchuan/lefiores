@@ -16,19 +16,56 @@
       %strong
         = @store.name
     \-
-    -if @branch_name.present? 
-      = @branch_name
-      = f.hidden_field :sub_name, :value => @branch_name
+    -if @branch.sub_name.present? 
+      = @branch.sub_name
+      = f.hidden_field :sub_name, :value => @branch.sub_name
     -else
       = f.text_field :sub_name, :placeholder => '<melaka>'        
     %dt 
       %strong
         Cut Off Time
     %dd 
-      = f.time_field :cut_off_time              
-    %dt 
+      Current Cut Off time set is:      
+      = f.time_field :cut_off_time,:value => @branch.cut_off_time
+    %dt
       %strong
-        Business Hours
+        = f.label 'Business Hours'
+    %dd      
+      .field
+        = f.label 'Monday'     
+        = f.time_field :business_hours_from_monday, :value => @branch.business_hours_from_monday
+        to
+        = f.time_field :business_hours_to_monday, :value => @branch.business_hours_to_monday
+      .field
+        = f.label 'Tuesday'     
+        = f.time_field :business_hours_from_tuesday, :value => @branch.business_hours_from_tuesday
+        to
+        = f.time_field :business_hours_to_tuesday, :value => @branch.business_hours_to_tuesday
+      .field
+        = f.label 'Wednesday'     
+        = f.time_field :business_hours_from_wednesday, :value => @branch.business_hours_from_wednesday
+        to
+        = f.time_field :business_hours_to_wednesday, :value => @branch.business_hours_to_wednesday
+      .field
+        = f.label 'Thursday'     
+        = f.time_field :business_hours_from_thursday, :value => @branch.business_hours_from_thursday
+        to
+        = f.time_field :business_hours_to_thursday, :value => @branch.business_hours_to_thursday
+      .field
+        = f.label 'Friday'     
+        = f.time_field :business_hours_from_friday, :value => @branch.business_hours_from_friday
+        to
+        = f.time_field :business_hours_to_friday, :value => @branch.business_hours_to_friday
+      .field
+        = f.label 'Saturday'     
+        = f.time_field :business_hours_from_saturday, :value => @branch.business_hours_from_saturday
+        to
+        = f.time_field :business_hours_to_saturday, :value => @branch.business_hours_to_saturday
+      .field
+        = f.label 'Sunday'     
+        = f.time_field :business_hours_from_sunday, :value => @branch.business_hours_from_sunday
+        to
+        = f.time_field :business_hours_to_sunday, :value => @branch.business_hours_to_sunday
   
   .actions
     = f.submit 'Save', {:class => 'uk-button'}

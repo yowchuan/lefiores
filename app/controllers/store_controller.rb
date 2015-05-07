@@ -44,7 +44,11 @@ class StoreController < ApplicationController
     authorize! :update, Store
     begin
       @store_image = Store::Image.where(:id => params[:image_id]).first
-      @store.store_logo_url = @store_image.file.url
+      if @store_image.file.m300x320.url.present?
+        @store.store_logo_url = @store_image.file.m300x320.url 
+      else
+        @store.store_logo_url = @store_image.file.s480x320.url 
+      end  
       @store.store_logo_id = @store_image.id
       if @store.update     
         redirect_to '/store/'+@store.id+'/settings',:notice => 'You have successfully set your logo' and return               
@@ -71,7 +75,9 @@ class StoreController < ApplicationController
   def settings
     @branch = Store::Branch.where(:id => @store.current_branch_id).first
     @branch_id = params[:branch_id]
-    @lefiores_tab_active = :settings          
+    @lefiores_tab_active = :settings    
+    @business_hours = stringify_business_hours @branch 
+    @business_hours = @business_hours.html_safe
   end
   
   def update
@@ -100,7 +106,7 @@ class StoreController < ApplicationController
   end    
 
   def show_store
-    if current_user.role != :admin
+    if  !current_user or current_user.role != :admin
       slug = params[:store_slug]
       @store = Store.where(:page_url => slug).first
       @branch = Store::Branch.where(:id => @store.current_branch_id).first
@@ -114,67 +120,73 @@ class StoreController < ApplicationController
   private
   def stringify_business_hours branch
     empty = false;
+    #monday
     if branch.business_hours_from_monday
-      business_hours = branch.business_hours_from_monday
+      business_hours = 'Monday: ' + branch.business_hours_from_monday
       empty =true
     end  
+    if branch.business_hours_to_monday and branch.business_hours_from_monday
+      business_hours = business_hours + ' - ' + branch.business_hours_to_monday 
+      empty =true
+    end  
+    #tuesday
     if branch.business_hours_from_tuesday
-      business_hours = business_hours + '\n' + branch.business_hours_from_tuesday
+      business_hours = business_hours + "<br>Tuesday: " + branch.business_hours_from_tuesday
       empty =true
     end
 
+    if branch.business_hours_to_tuesday and branch.business_hours_from_tuesday
+      business_hours = business_hours + " - " + branch.business_hours_to_tuesday
+    end
+
+    #wednesday
     if branch.business_hours_from_wednesday
-      business_hours = business_hours + '\n' + branch.business_hours_from_wednesday
+      business_hours = business_hours + '<br> Wednesday: ' + branch.business_hours_from_wednesday
+      empty =true
+    end  
+    if branch.business_hours_to_wednesday and branch.business_hours_from_wednesday
+      business_hours = business_hours + ' - ' + branch.business_hours_to_wednesday
       empty =true
     end  
 
+    #thursday
     if branch.business_hours_from_thursday
-      business_hours = business_hours + '\n' + branch.business_hours_from_thursday
+      business_hours = business_hours + '<br> Thursday: ' + branch.business_hours_from_thursday
+      empty =true
+    end  
+    if branch.business_hours_to_thursday and branch.business_hours_from_thursday
+      business_hours = business_hours + ' - ' + branch.business_hours_to_thursday
       empty =true
     end  
 
+    #friday
     if branch.business_hours_from_friday
-      business_hours = business_hours + '\n' + branch.business_hours_from_friday
+      business_hours = business_hours + '<br> Friday: ' + branch.business_hours_from_friday
+      empty =true
+    end  
+    if branch.business_hours_to_friday and branch.business_hours_from_friday
+      business_hours = business_hours + ' - ' + branch.business_hours_to_friday
+      empty =true
+    end  
+    #saturday
+    if branch.business_hours_to_saturday != '' and branch.business_hours_from_saturday != ''    
+      business_hours = business_hours + '<br>Saturday: ' + branch.business_hours_from_tuesday
+      empty =true        
+      business_hours = business_hours + ' - ' + branch.business_hours_to_saturday
       empty =true
     end  
 
-    if branch.business_hours_from_saturday
-      business_hours = business_hours + '\n' + branch.business_hours_from_tuesday
-      empty =true
-    end  
-
-    if branch.business_hours_from_sunday
+    #sunday
+    if branch.business_hours_from_sunday != ''
+      business_hours = business_hours + ' <br>Sunday: ' + branch.business_hours_from_sunday
       empty =true
     end    
-
-    #to
-
-    if branch.business_hours_to_monday
-      empty =true
-    end  
-    if branch.business_hours_to_tuesday
-      empty =true
-    end
-
-    if branch.business_hours_to_wednesday
-      empty =true
-    end  
-
-    if branch.business_hours_to_thursday
-      empty =true
-    end  
-
-    if branch.business_hours_to_friday
-      empty =true
-    end  
-
-    if branch.business_hours_to_saturday
-      empty =true
-    end  
-
-    if branch.business_hours_to_sunday
+    if branch.business_hours_to_sunday != '' and branch.business_hours_from_sunday != ''
+      business_hours = business_hours + '-' + branch.business_hours_to_sunday
       empty =true
     end 
+    
+    business_hours
   end  
 
   def site_params

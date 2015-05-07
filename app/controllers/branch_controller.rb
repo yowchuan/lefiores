@@ -1,8 +1,8 @@
 class BranchController < ApplicationController
   before_filter :require_login
   before_action :set_store
-  before_action :set_branch, only:[:create,:index,:edit_delivery_areas]  
-  before_action :set_days, only:[:new, :create,:index]
+  before_action :set_branch, only:[:create,:index]  
+  before_action :set_days, only:[:new, :create,:index,:edit]
 
   #dashboard
   def index
@@ -84,7 +84,7 @@ class BranchController < ApplicationController
   end
 
   def update_delivery_areas
-    set_branch
+    @branch = Store::Branch.where(:id => params[:branch_id]).first
 
     area_id = params[:branch][:delivery_area]
     delivery_area = Location.where(:id => area_id).first
@@ -110,6 +110,7 @@ class BranchController < ApplicationController
   end  
 
   def edit
+    set_branch    
     @branch = Store::Branch.where(:id => params[:branch_id]).first
 
   end
@@ -119,7 +120,7 @@ class BranchController < ApplicationController
     @branch.sub_name = 'main'
     respond_to do |format|
       if @branch.update(branch_params)
-        format.html { redirect_to '/store/settings', notice: 'Branch was successfully updated.' }
+        format.html { redirect_to '/store/'+@store.id+'/settings', notice: 'Branch was successfully updated.' }
         format.json { render :show, status: :ok, location: @branch }
       else
         format.html { render :edit }
@@ -160,7 +161,6 @@ class BranchController < ApplicationController
     end
       
   end  
-
 
   private
   def branch_params    

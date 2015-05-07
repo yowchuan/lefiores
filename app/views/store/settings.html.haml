@@ -1,9 +1,10 @@
 = render 'branch/dashboard_tabs'
+-#= render 'branch/dashboard_settings_subtabs'
 
 %h2.head-title
   = @store.name + ' Store Details'
 -if @store.store_logo_url.present?
-  = image_tag @store.store_logo_url
+  = image_tag @store.store_logo_url,{:width => "180"}
 -else
   Select one of the photo's below to set as your store logo
 = render 'image_uploader'  
@@ -33,7 +34,7 @@
 - if @store.branches.size == 1
   %h2.head-title
     = @branch.sub_name
-    Branch Detail
+    Branch Detail  
   
   %dl.uk-description-list-line
     %dt
@@ -48,19 +49,8 @@
       %strong 
         Business Hours
     %dd 
-      = @branch.cut_off_time
-      - if !@branch.cut_off_time?
-        %em
-          you haven't set your branch's cut off time
-    %dt
-      %strong 
-        Delivery Areas
-    %dd 
-      - @branch.delivery_areas.each do |area|
-        area.name
-      - if @branch.delivery_areas.size < 1
-        %em
-          you haven't set your branch's delivery area. your customer's might not be aware of your delivery area
+      -if @business_hours.present?
+        =@business_hours
     %dt 
       %strong
         Contact Number
@@ -69,7 +59,6 @@
       -if !@branch.contact_no?
         %em
           Branch's contact number is not set
-
     %dt 
       %strong
         Postal Code
@@ -78,5 +67,18 @@
       -if !@branch.postal_code?
         %em
           Branch's postal code is not set
+    %dt
+      %strong 
+        Delivery Areas
+    %dd 
+      =@branch.delivery_areas.first
+      - @branch.delivery_areas.each do |area|
+        area.name
+      - if @branch.delivery_areas.size < 1
+        %em
+          you haven't set your branch's delivery area. your customer's might not be aware of your delivery area
+        %a.uk-button.uk-button-primary{:href => "/store/branch/#{@branch.id}/edit_delivery_areas"}
+          Setup Delivery Areas  
+
 = link_to 'Edit ' + @branch.sub_name + ' Branch Details', '/store/' + @branch.id + '/edit', {:class => 'uk-button uk-button-primary'}    
 .uk-margin-bottom

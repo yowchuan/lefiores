@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :branches, :controller => 'branch' ,:path => 'branch'
   resources :tests
 
+
   get 'login' => 'user_sessions#new'
   post 'login' => 'user_sessions#create'
   get "logout" => "user_sessions#destroy"
@@ -54,6 +55,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'welcome#index'
+    resources :locations do
+      collection { post :import }
+    end
 
     ######## users
     get 'users' => 'users#index'

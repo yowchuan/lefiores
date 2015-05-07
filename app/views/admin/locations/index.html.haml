@@ -11,8 +11,12 @@
           %td
             = location.zipcode   
 
-          %td            
+          %td  
             = location.state.name if location.state.present?
           %td
             = location.city.name  if location.city.present?
+
+= form_tag import_admin_locations_path, multipart: true do
+  = file_field_tag :file
+  = submit_tag "Import"
           

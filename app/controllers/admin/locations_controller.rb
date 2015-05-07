@@ -56,6 +56,11 @@ class Admin::LocationsController < Admin::BaseController
     end
   end
 
+  def import
+    Location.import(params[:file])
+    redirect_to '/admin/locations', notice: "Locations imported."  
+  end  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_state

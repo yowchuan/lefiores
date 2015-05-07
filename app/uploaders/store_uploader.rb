@@ -33,6 +33,10 @@ class StoreUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [230, 130]
   end
 
+  version :m300x320 do
+    process resize_to_fill: [300, 320]
+  end
+
 
   version :small do
     #process :resize_to_fit => [150, 150]

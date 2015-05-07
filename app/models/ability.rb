@@ -3,6 +3,7 @@ class Ability
   
   def initialize(user)
     user ||= User.new # guest user (not logged in)
+    @user_id = user.id
     send user.role.to_s.classify.underscore
   end
 
@@ -12,7 +13,6 @@ class Ability
   end
 
   def florist
-    can :manage, Store
-    can :read, User
+    can [:read,:update,:create], Store, :user_id => @user_id
   end
 end
