@@ -14,7 +14,6 @@ class ProductsController < ApplicationController
     @product = Store::Product.new 
   end
 
-
   def create   
     @product = Store::Product.new(product_params) 
     @product_image = Store::Image.where(:id => @product.id).first

@@ -60,6 +60,11 @@
                 %a{:href => "/store/dashboard"} 
                   %i.uk-icon-money 
                   My Store            
+            -if current_user.role == :admin
+              %li
+                %a{:href => "/admin"} 
+                  %i.uk-icon-money 
+                  Admin Panel            
             %li
               %a{:href => "/logout"} 
                 %i.uk-icon-sign-out 

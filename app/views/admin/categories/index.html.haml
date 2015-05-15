@@ -1,1 +1,27 @@
-index for categories
+%a.uk-button.uk-button-primary.uk-button-large{:href => '/admin/categories/new'}
+  Add Category
+-if @categories.count > 0
+  %table.uk-table
+    %thead
+      %th
+        Name
+      %th
+        Description
+      %th   
+        Action
+    %body   
+      -@categories.each do |category|
+        %tr
+          %td
+            = category.name
+          %td
+            = category.description
+          %td
+            
+
+-else
+  %h1.uk-text-center
+    Please setup the categories for the florist to use on their products
+  .uk-container-center.uk-text-center
+    %a.uk-button.uk-button-primary.uk-button-large{:href => '/admin/categories/new'}
+      Add Category

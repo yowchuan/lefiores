@@ -16,41 +16,14 @@ class Admin::CategoriesController < Admin::BaseController
 
   def create
 
-    authorize! :create, Location    
+    authorize! :create, Store::Product::Category
 
-    @location = Location.new(location_params)        
-    city_id = params[:location][:location_city]
-    state_id = params[:location][:location_state]
+    @category = Store::Product::Category.new(category_params)            
 
-    @location.name = @location.zipcode
-    #setup city
-    if city_id.present?      
-      @city = Location::City.where(:id => city_id).first
-      if @city.present?
-        @location.city_id = @city.id.to_s        
-        @location.name = @location.name + ' ' + @city.name
-      end
-
-    end
-
-    #setup state
-    if state_id.present?
-      @state = Location::State.where(:id => state_id).first
-      if @state.present?
-        @location.state_id = @state.id.to_s
-        @location.name = @location.name + ', ' + @state.name
-      end
-    end
-
-
-    #@location.name = @location.zipcode + ' ' + @state.name + ' ' + @city.name 
-
-    if @location.save
-      uri = '/admin/locations/';
-
-      redirect_to uri, notice: 'location added: ' + @location.name and return
-    else
-      @news_list = get_news
+    if @category.save
+      uri = '/admin/categories/';
+      redirect_to uri, notice: 'category added: ' + @category.name and return
+    else      
       render :new
     end
   end
@@ -67,10 +40,7 @@ class Admin::CategoriesController < Admin::BaseController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def location_params
-      if params[:location][:keywords].present?
-        params[:location][:keywords] = params[:location][:keywords].split(',').join(',')
-      end
-      params.require(:location).permit(:zipcode);
+    def category_params      
+      params.require(:store_product_category).permit(:name, :description);
     end
 end
