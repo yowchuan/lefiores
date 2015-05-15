@@ -95,7 +95,10 @@ Rails.application.routes.draw do
     #admin/caegories
     get 'categories' => 'categories#index'
     get 'categories/new' => 'categories#new'
+    get 'categories/:category_id/edit' => 'categories#edit'
     post 'categories/create' => 'categories#create'
+    patch 'categories/update' => 'categories#update'
+
   end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

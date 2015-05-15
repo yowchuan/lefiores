@@ -6,12 +6,15 @@ body {
   line-height: 18px;
 }
 
-table tbody tr td{
-	background-color:cyan;
-}
-
 h2.head-title {
   font-weight: 300;
   border-left: 3px solid #ff0052;
   padding-left: 20px;
+}
+a{
+	color: #fe3452;
+} 
+a:hover{
+	background-color:transparent;
+	color: #fedede
 }
