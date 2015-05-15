@@ -70,10 +70,9 @@
     %dt
       %strong 
         Delivery Areas
-    %dd 
-      =@branch.delivery_areas.first
+    %dd       
       - @branch.delivery_areas.each do |area|
-        area.name
+        =area.name
       - if @branch.delivery_areas.size < 1
         %em
           you haven't set your branch's delivery area. your customer's might not be aware of your delivery area

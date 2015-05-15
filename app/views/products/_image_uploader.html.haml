@@ -1,10 +1,11 @@
 
 %hr
-%h3
+%strong
   =t(:image_upload)
-- if @store.id.present? and @store.created_at.present?
-  %div.uk-vertical-align.uk-text-center.uk-height-1-1
-    %div.uk-vertical-align-middle{'style'=>'width:250px;'}
+.uk-margin-small-top
+- if @product.id.present? and @store.created_at.present?
+  %div.uk-vertical-align.uk-height-1-1
+    %div.uk-vertical-align-middle
       %div#upload-drop.uk-placeholder.uk-text-center
         %div.uk-panel.uk-panel-box
           %i.uk-icon-cloud-upload.uk-icon-medium.uk-text-muted.uk-margin-small-right
@@ -19,32 +20,8 @@
 
         %div#progressbar.uk-progress.uk-hidden
           %div.uk-progress-bar{:style=>'width: 0%; background-color:#444;color:#fff;font-weight:777'}
-
--if @store.store_images.present? and @store.store_images.count > 0
-  %h3 
-    Your Store Images
-
-  -# click on the buttons below the image (small | large) to copy the syntax which you can paste into the editor
-  You can choose from the images below to use as your store logo
-  -# you can also set the following as featured image  
-  %hr
-  .lefiores-img-container
-    - @store.store_images.each do |image|
-      / This is a div as a thumbnail with a caption
-      .uk-thumbnail
-        = image_tag image.file.small.url        
-        .uk-thumbnail-caption
-          = link_to 'Set as Logo', '/store/' + @store.id + '/settings/set_logo/'+image.id.to_s , :class => "uk-button-mini uk-button-primary"
-        
-  %hr    
-        
-  
-- else
-  %ul#image_list
-
-
-
-
+.uk-margin-small-top
+.lefiores-img-container
 :javascript
 
 
@@ -52,9 +29,6 @@
     $('input#upload-select').click();
     return false; // must!
   });
-
-
-
 
   //$('.gw-image-prompt').on('click', function() {
   $(document).on('click','a.gw-image-prompt', function() {
@@ -69,12 +43,12 @@
           bar         = progressbar.find('.uk-progress-bar'),
           settings    = {
 
-          action: '/store/settings/#{@store.id}/upload_photo', // upload url
-          param: 'store_image[file]',
+          action: '/store/#{@store.id}/catalog/upload_photo', // upload url
+          param: 'product_image[file]',
           single: true,
           params: {
             'authenticity_token' : '#{form_authenticity_token}',
-            'store_image[store_id]' : '#{@store.id}',
+            'product_image[product_id]' : '#{@product.id}',
           },
           type: 'json',
 

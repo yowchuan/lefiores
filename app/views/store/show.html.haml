@@ -5,7 +5,7 @@
   .uk-width-medium-5-10
     %h2 
       = @store.name
-
+  
     %dl.uk-description-list-line      
       %dt 
         %strong
@@ -16,21 +16,20 @@
         
       %dt 
         %strong
-          =@branch.sub_name
-          Branch
+          Delivery Areas
       %dd 
         -if @branch.delivery_areas.size > 0
           - @branch.delivery_areas.each do |area|          
-            = area
+            = area.name
         -else
           This Branch did not set its delivery areas
           - if can? :update, @store
-            Manage your delivery areas 
-
-        %br
+            Manage your delivery areas       
+      %dt 
         %strong
-          Cut Off Time:
-        =@branch.cut_off_time
+          Cut Off Time
+      %dd 
+        =@branch.cut_off_time          
   .uk-width-medium-3-10
     %dl.uk-description-list-line      
       %dt 
@@ -70,5 +69,6 @@
           =@branch.business_hours_to_sunday
         -else
           Close
+      
         
 %hr

@@ -1,0 +1,39 @@
+= render 'branch/dashboard_tabs'
+.uk-margin-top
+= render 'catalog/subnavs'
+
+-if @products.empty?
+  %h1.uk-text-center
+    Ready to start selling? It's as easy as uploading your Facebook photos,or your money back!
+  .uk-container-center.uk-text-center
+    %button.uk-button.uk-button-primary.uk-button-large
+      Add Product
+-else
+  %table.uk-table
+    %thead
+      %th
+        Product ID
+      %th
+        Image
+      %th
+        Name
+      %th
+        Price (RM)
+      %th
+        Action
+    %body      
+      -@products.each do |product|
+        %tr
+          %td
+            =product.product_id
+          %td
+            =image_tag product.pic.x150.url.to_s, :width => 50          
+          %td
+            =product.name
+          %td
+            =product.price
+          %td
+            %a.uk-icon-trash
+            %a.uk-icon-pencil
+            %a.uk-icon-eye
+

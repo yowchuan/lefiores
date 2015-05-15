@@ -8,8 +8,12 @@
         = link_to 'Dashboard', '/store/dashboard'    
     %li
       = link_to 'Order', '/store/orders'
-    %li
-      = link_to 'Catalog', '/store/orders'  
+    -if @lefiores_tab_active == :catalog    
+      %li.uk-active
+        = link_to 'Catalog', '/store/' + @store.id + '/catalog'  
+    -else
+      %li
+        = link_to 'Catalog', '/store/' + @store.id + '/catalog'      
     %li
       = link_to 'Stats', '/store/orders'  
     -if @lefiores_tab_active == :settings    

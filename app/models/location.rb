@@ -5,6 +5,7 @@ class Location
   #field :name, type: String
   field :zipcode, type: String
   field :delivery_fee, type: String
+  field :delivery_areas, type: Array
   field :keywords, type: String
   field :name, type: String
   field :city, type:Object

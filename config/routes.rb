@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 
   ######### for store  
   get ':store_slug' => 'store#show_store' #view
+  get 'store/:store_id/catalog' => 'products#index' #view
+  get 'store/:store_id/catalog/new' => 'products#new' #view
   post 'store/create' => 'store#create' #submit [post]  
   patch 'store/update' => 'store#update'  
 
@@ -30,6 +32,7 @@ Rails.application.routes.draw do
   ######### for branch setup
   get 'store/branch/:id/edit_delivery_areas' => 'branch#edit_delivery_areas'
   patch 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
+  post 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
   post 'branch/create' => 'branch#create' #submit [post]  
   post 'branch/update_delivery_areas' => 'branch#update_delivery_areas' #submit [post]  
   post 'branch/update' => 'branch#update' #submit [post]  
@@ -47,9 +50,15 @@ Rails.application.routes.draw do
   get 'store/:store_id/settings/set_logo/:image_id' => 'store#set_logo'
   
 
+
   get 'store/settings' => 'branch#settings' #view
   
   #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
+
+  ######### for products
+  post 'store/:store_id/catalog/create' => 'products#create' #view
+  get 'store/:store_id/catalog/set_product_image/:image_id' => 'products#set_image'
+  post 'store/:store_id/catalog/upload_photo' => 'products#image_create'
   
   root 'welcome#index'
 
@@ -82,6 +91,9 @@ Rails.application.routes.draw do
     get 'states/new' => 'states#new'
     patch 'states/:id/update' => 'states#update'
     post 'states/new' => 'states#create'  
+
+    #admin/caegories
+    get 'categories' => 'categories#index'
   end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

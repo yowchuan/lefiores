@@ -77,7 +77,11 @@ class StoreController < ApplicationController
     @branch_id = params[:branch_id]
     @lefiores_tab_active = :settings    
     @business_hours = stringify_business_hours @branch 
-    @business_hours = @business_hours.html_safe
+    if @business_hours.present?
+      @business_hours = @business_hours.html_safe
+    else
+      @business_hours = "business_hours not setup"  
+    end
   end
   
   def update
@@ -121,55 +125,43 @@ class StoreController < ApplicationController
   def stringify_business_hours branch
     empty = false;
     #monday
-    if branch.business_hours_from_monday
+    if branch.business_hours_from_monday and branch.business_hours_from_monday != "" and branch.business_hours_to_monday != ""
       business_hours = 'Monday: ' + branch.business_hours_from_monday
-      empty =true
-    end  
-    if branch.business_hours_to_monday and branch.business_hours_from_monday
       business_hours = business_hours + ' - ' + branch.business_hours_to_monday 
       empty =true
     end  
+ 
+ 
     #tuesday
-    if branch.business_hours_from_tuesday
+    if branch.business_hours_from_tuesday.present? and branch.business_hours_to_tuesday.present? and branch.business_hours_from_tuesday != ""
       business_hours = business_hours + "<br>Tuesday: " + branch.business_hours_from_tuesday
-      empty =true
-    end
-
-    if branch.business_hours_to_tuesday and branch.business_hours_from_tuesday
       business_hours = business_hours + " - " + branch.business_hours_to_tuesday
+      empty =true
     end
 
     #wednesday
-    if branch.business_hours_from_wednesday
+    if branch.business_hours_from_wednesday.present? and branch.business_hours_to_wednesday.present?
       business_hours = business_hours + '<br> Wednesday: ' + branch.business_hours_from_wednesday
-      empty =true
-    end  
-    if branch.business_hours_to_wednesday and branch.business_hours_from_wednesday
       business_hours = business_hours + ' - ' + branch.business_hours_to_wednesday
       empty =true
     end  
-
+    
     #thursday
-    if branch.business_hours_from_thursday
+    if branch.business_hours_from_thursday.present? and branch.business_hours_to_thursday.present?
       business_hours = business_hours + '<br> Thursday: ' + branch.business_hours_from_thursday
-      empty =true
-    end  
-    if branch.business_hours_to_thursday and branch.business_hours_from_thursday
       business_hours = business_hours + ' - ' + branch.business_hours_to_thursday
       empty =true
-    end  
+    end      
 
     #friday
-    if branch.business_hours_from_friday
+    if branch.business_hours_from_friday.present? and branch.business_hours_to_friday.present?
       business_hours = business_hours + '<br> Friday: ' + branch.business_hours_from_friday
-      empty =true
-    end  
-    if branch.business_hours_to_friday and branch.business_hours_from_friday
       business_hours = business_hours + ' - ' + branch.business_hours_to_friday
       empty =true
     end  
+    
     #saturday
-    if branch.business_hours_to_saturday != '' and branch.business_hours_from_saturday != ''    
+    if branch.business_hours_to_saturday.present? and branch.business_hours_to_saturday != '' and branch.business_hours_from_saturday != ''    
       business_hours = business_hours + '<br>Saturday: ' + branch.business_hours_from_tuesday
       empty =true        
       business_hours = business_hours + ' - ' + branch.business_hours_to_saturday
@@ -177,11 +169,11 @@ class StoreController < ApplicationController
     end  
 
     #sunday
-    if branch.business_hours_from_sunday != ''
+    if branch.business_hours_from_sunday != '' and branch.business_hours_to_sunday.present?
       business_hours = business_hours + ' <br>Sunday: ' + branch.business_hours_from_sunday
       empty =true
     end    
-    if branch.business_hours_to_sunday != '' and branch.business_hours_from_sunday != ''
+    if branch.business_hours_to_sunday.present? and branch.business_hours_to_sunday != '' and branch.business_hours_from_sunday != ''
       business_hours = business_hours + '-' + branch.business_hours_to_sunday
       empty =true
     end 

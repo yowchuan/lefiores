@@ -13,6 +13,6 @@ class Ability
   end
 
   def florist
-    can [:read,:update,:create], Store, :user_id => @user_id
+    can :manage, Store, :user_id => @user_id        
   end
 end

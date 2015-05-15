@@ -84,7 +84,7 @@ class BranchController < ApplicationController
   end
 
   def update_delivery_areas
-    @branch = Store::Branch.where(:id => params[:branch_id]).first
+    set_branch
 
     area_id = params[:branch][:delivery_area]
     delivery_area = Location.where(:id => area_id).first

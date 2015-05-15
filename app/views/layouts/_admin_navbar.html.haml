@@ -3,7 +3,7 @@
   %ul.uk-navbar-nav
     %li.uk-parent{"data-uk-dropdown" => ""}
       %a{:href => "/admin/locations"}
-        %i.uk-icon-home
+        %i.uk-icon-tree
         Locations
       .uk-dropdown.uk-dropdown-navbar
         %ul.uk-nav.uk-nav-navbar
@@ -19,9 +19,20 @@
           %li.uk-nav-divider
           %li
             %a{:href => "#"} Separated item
+    %li.uk-parent{"data-uk-dropdown" => ""}
+      %a{:href => "/admin/categories"}
+        %i.uk-icon-tags
+        Categories
+      .uk-dropdown.uk-dropdown-navbar
+        %ul.uk-nav.uk-nav-navbar
+          %li
+            %a{:href => "/admin/categories"} Manage Categories
+          %li
+            %a{:href => "/admin/categories/news"} Add Category
+          
       %li.uk-parent{"data-uk-dropdown" => ""}
         %a{:href => "/admin/users"}
-          %i.uk-icon-home
+          %i.uk-icon-users
             Users
             
   .uk-navbar-content

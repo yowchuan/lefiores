@@ -28,7 +28,7 @@
     = f.label 'Delivery Areas'
     %br
     .field    
-    = select_tag 'branch[delivery_area][]', options_from_collection_for_select(Location.all, "id", "name"), {'class' => 'uk-width-2-4'}
+    = select_tag 'branch[delivery_area]', options_from_collection_for_select(Location.all, "id", "name"), {'class' => 'uk-width-2-4'}
   
     %i You can add more delivery areas on your branch settings as well as set delivery fees
   
