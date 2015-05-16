@@ -9,7 +9,7 @@
     %button.uk-button.uk-button-primary.uk-button-large
       Add Product
 -else
-  %table.uk-table
+  %table.uk-table.uk-table-hover.uk-table-striped
     %thead
       %th
         Product ID
@@ -18,22 +18,36 @@
       %th
         Name
       %th
+        Category
+      %th
         Price (RM)
+      %th
+        Status
       %th
         Action
     %body      
       -@products.each do |product|
         %tr
-          %td
+          %td.uk-width-2-10
             =product.product_id
-          %td
+          %td.uk-width-1-10
             =image_tag product.pic.x150.url.to_s, :width => 50          
-          %td
+          %td.uk-width-1-10
             =product.name
-          %td
+          %td.uk-width-2-10
+            -if product.category.present?
+              =product.category.name
+          %td.uk-width-1-10
             =product.price
-          %td
-            %a.uk-icon-trash
-            %a.uk-icon-pencil
-            %a.uk-icon-eye
-
+          %td.uk-width-1-10
+            =product.status
+          %td.uk-width-2-10
+            .uk-grid.uk-grid-collapse.uk-text-center
+              .uk-width-1-4
+                =link_to 'edit', '/admin/categories/' + product.id + '/edit'                              
+              .uk-width-2-4
+                =link_to 'deactivate', '/admin/categories/' + product.id + '/edit'                              
+              .uk-width-1-4
+                - if can? :delete, Store
+                  =link_to '/store/' + @store.id + '/catalog/destroy', method: :delete, data: { confirm: 'Are you sure you want to delete this product?' }, :class=>'uk-button' do
+                    %i.uk-icon-trash                

@@ -30,6 +30,10 @@
       %em
         Entise your customers, provide a good description of this item  
   .uk-form-row
+    = f.label :caegory, :class => "uk-form-label"
+    .uk-form-controls
+      = select_tag 'store_product[product_category_id]', options_from_collection_for_select(Store::Product::Category.all, "id", "name"), {'class' => 'uk-width-2-4',:prompt => 'choose category'}
+  .uk-form-row
     = f.label :price, :class => "uk-form-label"        
     .uk-form-controls
       RM

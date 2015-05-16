@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   patch 'store/update' => 'store#update'  
 
   ######### for store  
-  get ':store_slug' => 'store#show_store' #view
+  get '/florist/:store_slug' => 'store#show_store' #view
   get 'store/:store_id/catalog' => 'products#index' #view
   get 'store/:store_id/catalog/new' => 'products#new' #view
   post 'store/create' => 'store#create' #submit [post]  

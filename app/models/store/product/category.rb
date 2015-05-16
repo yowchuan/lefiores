@@ -2,8 +2,8 @@ class Store::Product::Category
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  belongs_to :product, :class_name => 'Product' 
-  has_many :Product 
+  has_and_belongs_to_many :product, :class_name => 'Store::Product' 
+   
 
   field :name, type: String
   field :description, type: String

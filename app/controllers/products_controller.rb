@@ -15,8 +15,12 @@ class ProductsController < ApplicationController
   end
 
   def create   
+    authorize! :update, @store
     @product = Store::Product.new(product_params) 
     @product_image = Store::Image.where(:id => @product.id).first
+
+    #@product.category = @category
+
     if @store.id.present?
       @product.store_id = @store.id 
     else
@@ -31,6 +35,22 @@ class ProductsController < ApplicationController
     else              
         render :new
     end    
+  end
+
+  def destroy
+    authorize! :destroy, @store
+    uri = '/store/' + @store.id + '/catalogue'    
+
+    @product_image = News::Image.where(:news_id => @news.id).first
+    if @news_image.present?
+      redirect_to uri, :alert => t(:cannot_delete_news_with_attached_image) and return
+    end
+
+    if @news.destroy
+      news_slack_notification 'deleted ' + "\n" 
+      redirect_to uri, :notice => t(:deleted) and return
+    end
+    redirect_to uri, notice: t(:delete_failed) and return    
   end
 
   def image_create
@@ -111,6 +131,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:store_product).permit(:name,:product_id, :description,:price,:pic)      
+    params.require(:store_product).permit(:name,:product_id, :description,:price,:pic,:product_category_id)      
   end
 end
