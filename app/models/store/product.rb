@@ -22,7 +22,7 @@ class Store::Product
   #validates :postal_code, presence: true
   validates :name, presence: true
   validates :product_category_id, presence: true
-  validates_uniqueness_of :product_id, :message => 'Product must be unique.'
+  validates_uniqueness_of :product_id, :message => 'Item Id must be unique.'
 
 
 

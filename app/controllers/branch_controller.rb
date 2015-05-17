@@ -13,13 +13,7 @@ class BranchController < ApplicationController
     else
       @branch = Store::Branch.new 
     end
-   
-    if @store.current_branch_id.present?
-      flash[:notice] = 'This is your dashboard'      + @store.current_branch_id
-    else      
-      
-      #redirect_to :controller => "branch", :action => "new", :branch_name => @branch_name, :branch_contact_no => @branch_contact_no
-    end
+
   end
 
   def new  	  	          

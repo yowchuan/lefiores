@@ -59,6 +59,10 @@ Rails.application.routes.draw do
   post 'store/:store_id/catalog/create' => 'products#create' #view
   get 'store/:store_id/catalog/set_product_image/:image_id' => 'products#set_image'
   post 'store/:store_id/catalog/upload_photo' => 'products#image_create'
+  delete 'store/:store_id/catalog/:product_id/destroy' => 'products#destroy'
+  get 'store/:store_id/catalog/:product_id/edit' => 'products#edit'
+  patch 'store/:store_id/catalog/:product_id/update' => 'products#update'
+  patch 'store/:store_id/catalog/:product_id/deactivate' => 'products#deactivate'
   
   root 'welcome#index'
 

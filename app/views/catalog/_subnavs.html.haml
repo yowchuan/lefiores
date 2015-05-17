@@ -1,8 +1,7 @@
 %ul.uk-subnav.uk-subnav-line
   %li
-    %a{:href => "#"}
-      %button.uk-button.uk-button-primary{:disabled => "true"} Product List
+    %a{:href => "/store/#{@store.id}/catalog"}
+      %button.uk-button.uk-button-primary{:disabled => ('true' if catalog_subnav_active_menu == 'index')} Product List
   %li.uk-active
     %a{:href => "/store/#{@store.id}/catalog/new"}
-      %button.uk-button.uk-button-primary Create New
-  
+      %button.uk-button.uk-button-primary{:disabled => ('true' if catalog_subnav_active_menu == 'create')} Create New

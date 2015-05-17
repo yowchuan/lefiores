@@ -1,10 +1,10 @@
 class ProductsController < ApplicationController
   before_filter :require_login  
-  before_action :set_store
+  before_action :set_store,:set_active_tab
   #dashboard
   def index
     authorize! :update, @store
-    @lefiores_tab_active = :catalog     
+    
     @store = Store.where(:user_id => current_user.id.to_s).first               
     @products = Store::Product.where(:store_id => @store.id)            
   end
@@ -27,11 +27,10 @@ class ProductsController < ApplicationController
       redirect_to root_url, :notice => 'no store id illegal access' + @store.id.to_s
     end
     
-    if @product.save!      
+    if @product.save
       uri = '/store/' + @store.id + '/catalog'
       #uri = 'store/branch/' + @branch.id.to_s + '/edit_delivery_areas';        
-      redirect_to uri, :notice => 'Product Added!' and return              
-      
+      redirect_to uri, :notice => 'Product Added!' and return               
     else              
         render :new
     end    
@@ -39,18 +38,29 @@ class ProductsController < ApplicationController
 
   def destroy
     authorize! :destroy, @store
-    uri = '/store/' + @store.id + '/catalogue'    
-
-    @product_image = News::Image.where(:news_id => @news.id).first
-    if @news_image.present?
-      redirect_to uri, :alert => t(:cannot_delete_news_with_attached_image) and return
+    uri = '/store/' + @store.id + '/catalog'    
+    @product = Store::Product.where(:id => params[:product_id]).first
+    @product_image = Store::Product::Image.where(:product_id => @product.id).first
+    if @product_image.present?
+      @product_image.destroy
     end
 
-    if @news.destroy
-      news_slack_notification 'deleted ' + "\n" 
-      redirect_to uri, :notice => t(:deleted) and return
+
+    if @product.destroy      
+        redirect_to uri, :notice => 'deleted' and return
     end
-    redirect_to uri, notice: t(:delete_failed) and return    
+    redirect_to uri, notice: 'deleted' and return    
+  end
+
+  def deactivate
+    authorize! :destroy, @store
+    uri = '/store/' + @store.id + '/catalog'    
+    @product = Store::Product.where(:id => params[:product_id]).first
+    @product.status = :inactive
+    if @product.save
+        redirect_to uri, :notice => 'product deactivated' and return
+    end
+    redirect_to uri, notice: 'deleted' and return    
   end
 
   def image_create
@@ -66,10 +76,6 @@ class ProductsController < ApplicationController
     else
       render :text => 'upload error'
     end
-  end
-
-  def destroy	
-	  
   end
 
   def update_delivery_areas
@@ -99,17 +105,15 @@ class ProductsController < ApplicationController
   end  
 
   def edit
-    set_branch    
-    @branch = Store::Branch.where(:id => params[:branch_id]).first
-
+    @product = Store::Product.where(:id => params[:product_id]).first
   end
 
   def update
-    set_branch
-    @branch.sub_name = 'main'
+    @product = Store::Product.where(:id => params[:product_id]).first
+    uri = '/store/' + @store.id + '/catalog'
     respond_to do |format|
-      if @branch.update(branch_params)
-        format.html { redirect_to '/store/'+@store.id+'/settings', notice: 'Branch was successfully updated.' }
+      if @product.update(product_params)
+        format.html { redirect_to uri, notice: @product.name + ' successfully updated.' }
         format.json { render :show, status: :ok, location: @branch }
       else
         format.html { render :edit }
@@ -132,5 +136,9 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:store_product).permit(:name,:product_id, :description,:price,:pic,:product_category_id)      
+  end
+
+  def set_active_tab
+    @lefiores_tab_active = :catalog     
   end
 end
