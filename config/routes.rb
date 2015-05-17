@@ -6,10 +6,13 @@ Rails.application.routes.draw do
   resources :branches, :controller => 'branch' ,:path => 'branch'
   resources :tests
 
+<<<<<<< HEAD
   ######### oururls
   get 'delivery' => 'welcome#delivery'
   get 'payment' => 'welcome#payment'
   get 'the-lefiores-team' => 'welcome#the_team'
+=======
+>>>>>>> 089976026c6429861b9288992ba82919cb868026
 
   get 'login' => 'user_sessions#new'
   post 'login' => 'user_sessions#create'
@@ -17,7 +20,7 @@ Rails.application.routes.draw do
   delete "logout" => "user_sessions#destroy"
 
   
-  get 'register' => 'users#new'
+  get 'register' => 'users#new' 
   post 'register' => 'users#create'
 
   ######### for store  
@@ -25,11 +28,21 @@ Rails.application.routes.draw do
   post 'store/create' => 'store#create' #submit [post]  
   patch 'store/update' => 'store#update'  
 
+  ######### for store  
+  get '/florist/:store_slug' => 'store#show_store' #view
+  get 'store/:store_id/catalog' => 'products#index' #view
+  get 'store/:store_id/catalog/new' => 'products#new' #view
+  post 'store/create' => 'store#create' #submit [post]  
+  patch 'store/update' => 'store#update'  
+
 
   ######### for branch setup
   get 'store/branch/:id/edit_delivery_areas' => 'branch#edit_delivery_areas'
   patch 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
+  post 'store/branch/:branch_id/update_delivery_areas' => 'branch#update_delivery_areas'
   post 'branch/create' => 'branch#create' #submit [post]  
+  post 'branch/update_delivery_areas' => 'branch#update_delivery_areas' #submit [post]  
+  post 'branch/update' => 'branch#update' #submit [post]  
   #get 'branch/:id/edit' => 'branch#edit'
   #post 'branch/:site_id/update' => 'sites#update'
   #patch 'sites/:site_id/update' => 'sites#update'
@@ -38,18 +51,37 @@ Rails.application.routes.draw do
   ######### for branch/dashboard
   get 'store/dashboard' => 'branch#index' #view
   get 'store/branch/new' => 'branch#new' #view
+  get 'store/:branch_id/settings' => 'store#settings'
+  get 'store/:branch_id/edit' => 'branch#edit'
+  post 'store/settings/:store_id/upload_photo' => 'store#image_create'
+  get 'store/:store_id/settings/set_logo/:image_id' => 'store#set_logo'
+  
+
 
   get 'store/settings' => 'branch#settings' #view
   
   #delete  'sites/:site_id/pic_destroy' => 'sites#pic_destroy'
+
+  ######### for products
+  post 'store/:store_id/catalog/create' => 'products#create' #view
+  get 'store/:store_id/catalog/set_product_image/:image_id' => 'products#set_image'
+  post 'store/:store_id/catalog/upload_photo' => 'products#image_create'
+  delete 'store/:store_id/catalog/:product_id/destroy' => 'products#destroy'
+  get 'store/:store_id/catalog/:product_id/edit' => 'products#edit'
+  patch 'store/:store_id/catalog/:product_id/update' => 'products#update'
+  patch 'store/:store_id/catalog/:product_id/deactivate' => 'products#deactivate'
   
   root 'welcome#index'
 
   namespace :admin do
     root 'welcome#index'
+    resources :locations do
+      collection { post :import }
+    end
 
     ######## users
     get 'users' => 'users#index'
+    get 'dashboard' => 'welcome#index'
     get 'users/:id' => 'users#show'
     get 'users/:id/edit' => 'users#edit'
     patch 'users/:id/update' => 'users#update'
@@ -70,6 +102,14 @@ Rails.application.routes.draw do
     get 'states/new' => 'states#new'
     patch 'states/:id/update' => 'states#update'
     post 'states/new' => 'states#create'  
+
+    #admin/caegories
+    get 'categories' => 'categories#index'
+    get 'categories/new' => 'categories#new'
+    get 'categories/:category_id/edit' => 'categories#edit'
+    post 'categories/create' => 'categories#create'
+    patch 'categories/update' => 'categories#update'
+
   end  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

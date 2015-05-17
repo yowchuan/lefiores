@@ -1,0 +1,17 @@
+= render 'branch/dashboard_tabs'
+.uk-margin-top
+  %ul.uk-breadcrumb
+    %li
+      %a{:href => "/store/dashboard"} My Store
+    %li
+      %a{:href => "/store/#{@store.id}/catalog"} My Products
+    %li
+      %span edit
+    %li.uk-active
+      %span 
+        =@product.name
+%h2.head-title
+  Edit Product
+%hr
+= render 'products/edit_form'
+.uk-margin-top

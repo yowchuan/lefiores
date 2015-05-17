@@ -1,0 +1,34 @@
+%a.uk-button.uk-button-primary.uk-button-large{:href => '/admin/categories/new'}
+  Add Category
+-if @categories.count > 0
+
+  %table.uk-table.uk-table-hover.uk-table-striped
+    %caption
+      Categories
+    %thead  
+      %th
+        Name
+      %th
+        Description
+      %th   
+        Action
+    %body   
+      -@categories.each do |category|
+        %tr
+          %td.uk-width-2-6
+            = category.name
+          %td.uk-width-3-6
+            = category.description
+          %td.uk-width-1-6
+            .uk-grid
+              .uk-width-1-3
+                =link_to 'edit', '/admin/categories/' + category.id + '/edit'                              
+              .uk-width-1-3
+                delete
+
+-else
+  %h1.uk-text-center
+    Please setup the categories for the florist to use on their products
+  .uk-container-center.uk-text-center
+    %a.uk-button.uk-button-primary.uk-button-large{:href => '/admin/categories/new'}
+      Add Category

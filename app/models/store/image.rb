@@ -4,14 +4,14 @@ class Store::Image
 
   belongs_to :store 
 
-  #mount_uploader :file, NewsUploader
+  mount_uploader :file, StoreUploader
   before_create :set_url
 
   field :file, type: String
   field :url, type: String
   #field :news_id, type: String
-  field :news_id, type: Object
-  index({ news_id: 1 }, {  name: "page_id_index"})
+  field :store_id, type: Object
+  index({ store_id: 1 }, {  name: "page_id_index"})
 
   #field :user_id, type: String
   field :user_id, type: Object

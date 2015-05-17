@@ -1,0 +1,74 @@
+.uk-grid.uk-grid-divider
+  .uk-width-medium-2-10.uk-width-smal-1-1
+    -if @store.present?
+      %img{:src => "#{@store.store_logo_url}"}
+  .uk-width-medium-5-10
+    %h2 
+      = @store.name
+  
+    %dl.uk-description-list-line      
+      %dt 
+        %strong
+          Contact Number
+      %dd 
+        = @store.contact_no
+      
+        
+      %dt 
+        %strong
+          Delivery Areas
+      %dd 
+        -if @branch.delivery_areas.size > 0
+          - @branch.delivery_areas.each do |area|          
+            = area.name
+        -else
+          This Branch did not set its delivery areas
+          - if can? :update, @store
+            Manage your delivery areas       
+      %dt 
+        %strong
+          Cut Off Time
+      %dd 
+        =@branch.cut_off_time          
+  .uk-width-medium-3-10
+    %dl.uk-description-list-line      
+      %dt 
+        %strong
+          Business Hours (24 hour format)
+      %dd        
+        Monday 
+        =@branch.business_hours_from_monday + ' - '        
+        =@branch.business_hours_to_monday
+        %br
+        Tuesday 
+        =@branch.business_hours_from_tuesday + ' - '        
+        =@branch.business_hours_to_tuesday
+        %br
+        Wednesday
+        =@branch.business_hours_from_wednesday + ' - '        
+        =@branch.business_hours_to_wednesday
+        %br
+        Thursday
+        =@branch.business_hours_from_thursday + ' - '        
+        =@branch.business_hours_to_thursday
+        %br
+        Friday
+        =@branch.business_hours_from_friday + ' - '        
+        =@branch.business_hours_to_friday
+        %br
+        Saturday
+        -if @branch.business_hours_from_saturday.present? and @branch.business_hours_to_saturday.present?          
+          =@branch.business_hours_from_saturday + ' - '        
+          =@branch.business_hours_to_saturday
+        -else
+          Close
+        %br
+        Sunday
+        -if @branch.business_hours_from_sunday.present? and @branch.business_hours_to_sunday.present?          
+          =@branch.business_hours_from_sunday + ' - '        
+          =@branch.business_hours_to_sunday
+        -else
+          Close
+      
+        
+%hr

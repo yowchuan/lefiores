@@ -15,10 +15,11 @@
     (keywords comma separeted ex: solaris, solaris mont kiara, dutamas )     
   .field
     = f.label :state
-    = select_tag 'location[location_state]', options_from_collection_for_select(Location::State.all, "id", "name")
+    -#= select_tag 'location[location_state]', options_from_collection_for_select(Location::State.all)
+    = select_tag 'location[location_state]', options_from_collection_for_select(Location::State.all, "id", "name"), {'class' => 'uk-width-2-4'}
   .field
-    = f.label :city
-    = select_tag 'location[location_city]', options_from_collection_for_select(Location::City.all, "id", "name")  
+    = f.label :city    
+    = select_tag 'location[location_city]', options_from_collection_for_select(Location::City.all, "id", "name"), {'class' => 'uk-width-2-4'}
   
 
 

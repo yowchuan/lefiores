@@ -14,12 +14,19 @@
   = csrf_meta_tags  
 
 %body
-  
   = render 'layouts/default_navbar'
+<<<<<<< HEAD
   %div.uk-container-fluid
     .uk-margin-top
       = render 'layouts/notice'
     = yield
   .uk-footer
     = render 'layouts/default_footer'
+=======
+  %div.uk-container.uk-container-center
+    
+    .uk-margin-top
+      = render 'layouts/notice'
+    = yield     
+>>>>>>> 089976026c6429861b9288992ba82919cb868026
 

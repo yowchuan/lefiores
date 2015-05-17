@@ -17,6 +17,7 @@ class AdminAbility
     can :manage, Location
     can :manage, Location::City
     can :manage, Location::State
+    can :manage, Store::Product::Category
     can :manage, User
 
     #can :manage, News::Category
