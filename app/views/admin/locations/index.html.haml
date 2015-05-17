@@ -9,9 +9,14 @@
       - @locations.each do |location|
         %tr
           %td
-            = location.zipcode                
+            = location.zipcode   
+
+          %td  
+            = location.state.name if location.state.present?
           %td
-            = location.state.name
-          %td
-            = location.city.name  
+            = location.city.name  if location.city.present?
+
+= form_tag import_admin_locations_path, multipart: true do
+  = file_field_tag :file
+  = submit_tag "Import"
           

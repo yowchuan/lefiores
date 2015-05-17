@@ -6,5 +6,5 @@ class Location::City
   field :name, :type => String  
   field :status, type: String , default: 'active'  
     
-  belongs_to :location
+  belongs_to :Location, :class_name => 'Location'    
 end 

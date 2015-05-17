@@ -35,18 +35,20 @@
           .uk-button-dropdown{"data-uk-dropdown" => ""}
             .uk-button-group
               %button.uk-button.uk-button-success
-
-                = @branch.sub_name
+                -if @branch.present?
+                  = @branch.sub_name
+                -else
+                  = Store::Branch.where(:id => @store.current_branch_id).first.sub_name
               %div.data-uk-dropdown
                 %a.uk-button.uk-button-success
                   %i.uk-icon-caret-down                              
-                                                
-            .uk-dropdown
-              %ul.uk-nav.uk-nav-dropdown                 
-                -@store_branches.each do |branch|           
-                  %li
-                    %a{:href => "/store/dashboard"}                   
-                      = branch.sub_name                  
+            -if @store_branches.size > 1                                    
+              .uk-dropdown
+                %ul.uk-nav.uk-nav-dropdown                 
+                  -@store_branches.each do |branch|           
+                    %li
+                      %a{:href => "/store/dashboard"}                   
+                        = branch.sub_name                  
                   
       .uk-button-dropdown{"data-uk-dropdown" => ""}
         %button.uk-button
@@ -58,6 +60,11 @@
                 %a{:href => "/store/dashboard"} 
                   %i.uk-icon-money 
                   My Store            
+            -if current_user.role == :admin
+              %li
+                %a{:href => "/admin"} 
+                  %i.uk-icon-money 
+                  Admin Panel            
             %li
               %a{:href => "/logout"} 
                 %i.uk-icon-sign-out 

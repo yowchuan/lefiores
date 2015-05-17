@@ -1,3 +1,21 @@
+GIT
+  remote: git://github.com/ahoward/mongoid-grid_fs.git
+  revision: 2507e65a60206cb726c0a38bdab8dd343150c0e0
+  specs:
+    mongoid-grid_fs (2.1.0)
+      mime-types (>= 1.0, < 3.0)
+      mongoid (>= 3.0, < 5.0)
+
+GIT
+  remote: git://github.com/mongoid/mongoid.git
+  revision: 42cb0714e5bef47de13b3b450ed9d90a36082aab
+  specs:
+    mongoid (4.0.2)
+      activemodel (~> 4.0)
+      moped (~> 2.0.0)
+      origin (~> 2.1)
+      tzinfo (>= 0.3.37)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -60,6 +78,15 @@ GEM
       capistrano (~> 3.1)
       sshkit (~> 1.3)
     capistrano-stats (1.1.1)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    carrierwave-mongoid (0.7.1)
+      carrierwave (>= 0.8.0, < 0.11.0)
+      mongoid (>= 3.0, < 5.0)
+      mongoid-grid_fs (>= 1.3, < 3.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -92,8 +119,12 @@ GEM
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
     json (1.8.2)
     jwt (1.0.0)
+    kgio (2.9.3)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -101,13 +132,10 @@ GEM
     meta-tags (2.0.0)
       actionpack (>= 3.0.0)
     mime-types (2.4.3)
+    mini_magick (3.8.1)
+      subexec (~> 0.2.1)
     mini_portile (0.6.2)
     minitest (5.5.1)
-    mongoid (4.0.2)
-      activemodel (~> 4.0)
-      moped (~> 2.0.0)
-      origin (~> 2.1)
-      tzinfo (>= 0.3.37)
     moped (2.0.4)
       bson (~> 2.2)
       connection_pool (~> 2.0)
@@ -158,9 +186,11 @@ GEM
       activesupport (= 4.2.0)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.13.0)
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
+    rmagick (2.13.3)
     sass (3.4.11)
     sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -189,6 +219,7 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    subexec (0.2.3)
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -196,13 +227,15 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2015.1)
-      tzinfo (>= 1.0.0)
     uglifier (2.7.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     uikit-sass-rails (1.3.0)
       sass-rails (>= 3.1)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     web-console (2.0.0)
       activemodel (~> 4.0)
       binding_of_caller (>= 0.7.2)
@@ -218,22 +251,25 @@ DEPENDENCIES
   cancancan (~> 1.9)
   capistrano-rails
   capistrano-rbenv (~> 2.0)
+  carrierwave-mongoid
   coffee-rails (~> 4.1.0)
-  coffee-script-source (= 1.8.0)
   connection_pool (~> 2.0.0)
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
+  jquery-turbolinks
   meta-tags
-  mongoid
+  mini_magick
+  mongoid!
+  mongoid-grid_fs!
   rails (= 4.2.0)
+  rmagick
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   sorcery
   spring
   turbolinks
-  tzinfo
-  tzinfo-data
   uglifier (>= 1.3.0)
   uikit-sass-rails
+  unicorn
   web-console (~> 2.0)

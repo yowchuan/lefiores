@@ -1,8 +1,8 @@
 class BranchController < ApplicationController
   before_filter :require_login
   before_action :set_store
-  before_action :set_branch, only:[:create,:index,:edit_delivery_areas]  
-  before_action :set_days, only:[:new, :create,:index]
+  before_action :set_branch, only:[:create,:index]  
+  before_action :set_days, only:[:new, :create,:index,:edit]
 
   #dashboard
   def index
@@ -13,13 +13,7 @@ class BranchController < ApplicationController
     else
       @branch = Store::Branch.new 
     end
-   
-    if @store.current_branch_id.present?
-      flash[:notice] = 'This is your dashboard'      + @store.current_branch_id
-    else      
-      
-      #redirect_to :controller => "branch", :action => "new", :branch_name => @branch_name, :branch_contact_no => @branch_contact_no
-    end
+
   end
 
   def new  	  	          
@@ -65,15 +59,15 @@ class BranchController < ApplicationController
     end
     
     if @branch.save!      
-      if @store.update_attribute(:has_branch, true)
-        @store.current_branch_id = @branch.id.to_s;
-        @store.save
-        uri = '/store/branch/' + @branch.id.to_s + '/edit_delivery_areas'
-        #uri = 'store/branch/' + @branch.id.to_s + '/edit_delivery_areas';        
-        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return              
-      else
-        redirect_to root_url, :notice => 'Unable to update store'+ @branch.sub_name and return              
-      end  
+      #if @store.update_attribute(:has_branch, true)
+        #@store.current_branch_id = @branch.id.to_s;
+        #@store.save
+      uri = '/store/branch/' + @branch.id.to_s + '/edit_delivery_areas'
+      #uri = 'store/branch/' + @branch.id.to_s + '/edit_delivery_areas';        
+      redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return              
+      #else
+      #  redirect_to root_url, :notice => 'Unable to update store'+ @branch.sub_name and return              
+      #end  
     else              
         redirect_to root_url, :notice => 'Unable to save branch'+ @branch.sub_name and return              
     end    
@@ -84,13 +78,50 @@ class BranchController < ApplicationController
   end
 
   def update_delivery_areas
+    set_branch
+
+    area_id = params[:branch][:delivery_area]
+    delivery_area = Location.where(:id => area_id).first
     
+    @branch.delivery_areas.push(delivery_area)    
+
+    if @branch.save!      
+      if @store.update_attribute(:has_branch, true)
+        @store.current_branch_id = @branch.id.to_s;
+        @store.save
+        uri = '/store/dashboard/'
+        redirect_to uri, :notice => 'Your shop is now ready and you can now start selling!'+ @branch.sub_name and return              
+      else
+       redirect_to root_url, :notice => 'Unable to update store'+ @branch.sub_name and return              
+      end   
+
+    end  
 
   end  
   #GET
   def edit_delivery_areas
-    
+    set_branch
   end  
+
+  def edit
+    set_branch    
+    @branch = Store::Branch.where(:id => params[:branch_id]).first
+
+  end
+
+  def update
+    set_branch
+    @branch.sub_name = 'main'
+    respond_to do |format|
+      if @branch.update(branch_params)
+        format.html { redirect_to '/store/'+@store.id+'/settings', notice: 'Branch was successfully updated.' }
+        format.json { render :show, status: :ok, location: @branch }
+      else
+        format.html { render :edit }
+        format.json { render json: @branch.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def set_days
     @days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
@@ -125,11 +156,10 @@ class BranchController < ApplicationController
       
   end  
 
-
   private
   def branch_params    
     
-    params.require(:store_branch).permit(:contact_no, :sub_name,
+    params.require(:store_branch).permit(:contact_no, :sub_name, :cut_off_time,
                 :business_hours_from_monday,
                 :business_hours_from_tuesday,
                 :business_hours_from_wednesday,

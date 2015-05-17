@@ -9,9 +9,12 @@ class Store
   field :user_id, type: Object
   field :user_email, type: String
   field :has_branch, type: Boolean , default: false  
-  field :current_branch_id, type: Object
+  field :current_branch_id, type: Object  
+  field :store_logo_url, type: String 
+  field :store_logo_id, type: Object 
 
   has_many :branches, :class_name => 'Store::Branch'
+  has_many :store_images, :class_name => 'Store::Image'
   #has_many :images, :class_name => 'Store:key => "value", :Image'
   belongs_to :user
 
