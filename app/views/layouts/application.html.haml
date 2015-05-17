@@ -16,8 +16,10 @@
 %body
   
   = render 'layouts/default_navbar'
-  %div.uk-container.uk-container-center
+  %div.uk-container-fluid
     .uk-margin-top
       = render 'layouts/notice'
     = yield
+  .uk-footer
+    = render 'layouts/default_footer'
 

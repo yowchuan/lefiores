@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   resources :branches, :controller => 'branch' ,:path => 'branch'
   resources :tests
 
+  ######### oururls
+  get 'delivery' => 'welcome#delivery'
+  get 'payment' => 'welcome#payment'
+  get 'the-lefiores-team' => 'welcome#the_team'
+
   get 'login' => 'user_sessions#new'
   post 'login' => 'user_sessions#create'
   get "logout" => "user_sessions#destroy"
